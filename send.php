@@ -125,7 +125,7 @@ if($_COOKIE['nowaFirma']==1){
 
 		echo "<BR><BR><BR>";
 		
-		$_SESSION['idFirmy'] = $nowaFirma->id;
+		$_POST['idFirmy'] = $nowaFirma->id;
 	
 	if($_COOKIE['confirm']==1){
 		//zmiana firmy w tabeli pacjenci
@@ -141,7 +141,7 @@ if($_COOKIE['nowaFirma']==1){
 	
 }
 else if($_COOKIE['nowaFirma']==2){
-	$_SESSION['idFirmy'] = $_POST['innaFirma'];
+	$_POST['idFirmy'] = $_POST['innaFirma'];
 }
 else{
 	
@@ -202,8 +202,8 @@ foreach($_POST['uslugi'] as $usluga){
 		$discountArray = explode(':', $discount);
 		echo "<BR>1: ".$discountArray[0];
 		echo "<BR>2: ".$discountArray[1];
-		
-		if($_SESSION['idFirmy']==$discountArray[0]){
+		print_r($_SESSION);
+		if($_POST['idFirmy']==$discountArray[0]){
 			//jeśli tak, to będzie użyta ta cena
 			$discountPrice=$discountArray[1];
 		}
@@ -212,13 +212,13 @@ foreach($_POST['uslugi'] as $usluga){
 	
 	
 	if($_POST['rodzajWizyty']=='medycyna_pracy'){
-		$wizyta->id_firmy = $_SESSION['idFirmy'];
+		$wizyta->id_firmy = $_POST['idFirmy'];
 		$wizyta->typBadan = $_POST['typBadan'];
 		
 		if($discountPrice==null) $wizyta->cena = $uslugaDB->cena_mp;
 		else $wizyta->cena = $discountPrice;
 	} 
-	if($_POST['rodzajWizyty']=='specjalistyka'){
+	else{
 		//$wizyta->id_firmy = 1;
 		//$wizyta->typBadan = "n/a";
 		$wizyta->cena = $uslugaDB->cena_inne;
@@ -256,7 +256,7 @@ foreach($_POST['uslugi'] as $usluga){
 		WHERE rejestrwizyt.id=$id_ostatniej->id")
 		->find_one();
 	}
-	if($_POST['rodzajWizyty']=='specjalistyka'){
+	else{
 				$zarejestrowana=ORM::for_table('rejestrwizyt')
 		->raw_query("SELECT pacjenci.imie, 
 		pacjenci.nazwisko, 
