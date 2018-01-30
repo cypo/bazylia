@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+
+<script>
+
+var SUMA = 0.0;
+
+function init()
+{
+    document.getElementById("txt-add").disabled = false;
+
+    var parent = document.getElementById("div-sum");
+
+    var elem = document.createElement("p");
+    elem.appendChild(document.createTextNode("Razem do zapłaty: " + SUMA.toString() + "zł."));
+
+    parent.appendChild(elem);
+}
+ 
+function addTextFields()
+{
+    var parent = document.getElementById("txt-fields");
+    
+    var header = ["Lp.", "Nazwa", "PKWIU", "Ilość", "Jm", "Cena netto",  "Wartość netto ",  "Stawka VAT",  "Kwota VAT",   "Wartość brutto"];
+
+    for(var i = 0; i < 10; i++)
+    {
+        var elem = document.createElement("input");
+        elem.setAttribute('type', 'text');
+        elem.setAttribute('id', 'fd'+i.toString());
+
+        parent.appendChild(elem);
+        parent.insertBefore(document.createTextNode(header[i]), elem);
+        parent.appendChild(document.createElement("br"));
+
+    }
+
+    var elem3 = document.createElement("input");
+    elem3.setAttribute('type', 'button');
+    elem3.setAttribute('value', 'Dodaj');
+    elem3.setAttribute('onclick', 'showText()');
+    parent.appendChild(elem3);
+ 
+    var btn = document.getElementById("txt-add");
+    btn.disabled = true;
+}
+ 
+function foo(array)
+{
+    var elem = document.createElement("tr");
+    var elems = []
+ 
+    for(var i = 0; i < 10; i++)
+    {
+        elems.push(document.createElement("td"));
+        elems[i].appendChild(document.createTextNode(array[i].toString()));
+        elem.appendChild(elems[i]);
+    }
+ 
+    var parent = document.getElementById("tabela");
+    parent.appendChild(elem);
+}
+
+function isPositiveInteger(n) {
+    return 0 === n % (!isNaN(parseFloat(n)) && 0 <= ~~n);
+}
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function validate(array)
+{
+    //lp
+    if(!isPositiveInteger(array[0]))
+        return false;
+    //nazwa
+    if(isNumeric(array[1]))
+        return false;
+    //pkwiu
+    if(isNumeric(array[2]))
+        return false;
+    // //ilosc
+    if(!isPositiveInteger(array[3]))
+        return false;
+    // //jm
+    if(isNumeric(array[2]))
+        return false;
+    // //cena netto
+    if(!(isNumeric(array[5]) && parseFloat(array[5]) > 0.0))
+        return false;
+    // //wartosc netto
+    if(!(isNumeric(array[6]) && parseFloat(array[6]) > 0.0))
+        return false;
+    // //stawka vat
+    if(!isPositiveInteger(array[7]))
+        return false;
+    // //kwota vat
+    if(!(isNumeric(array[8]) && parseFloat(array[8]) > 0.0))
+        return false;
+    // //wartosc brutto
+    if(!(isNumeric(array[9]) && parseFloat(array[9]) > 0.0))
+        return false;
+
+    return true;
+}
+
+function showText()
+{
+    var popup_message = "";
+    var a = []
+    for(var i = 0; i < 10; i++)
+    {
+    //     popup_message += i.toString() + ": " + document.getElementById('fd'+i.toString()).value + "\n";
+        a.push(document.getElementById('fd'+i.toString()).value);
+    }
+
+    if(!validate(a))
+    {
+        alert("Podałeś niepoprawne dane!");
+
+        var parent = document.getElementById("txt-fields");
+
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+
+        var btn = document.getElementById("txt-add");
+        btn.disabled = false;
+        return;
+    }
+
+    foo(a);
+
+    SUMA += parseFloat(a[9]);
+
+    var parent = document.getElementById("txt-fields");
+
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+
+    parentSum = document.getElementById("div-sum");
+
+    while (parentSum.firstChild) {
+        parentSum.removeChild(parentSum.firstChild);
+    }
+
+    var elem = document.createElement("p");
+    elem.appendChild(document.createTextNode("Razem do zapłaty: " + SUMA.toString()+ "zł"));
+
+    parentSum.appendChild(elem);
+
+    var btn = document.getElementById("txt-add");
+    btn.disabled = false;
+}
+
+</script>
+<style>
+body
+{
+    margin:50px 0px; padding:0px;
+    text-align:center;
+}
+	
+#Content {
+	max-width:1000px;
+	text-align:left;
+	padding:15px;
+	border:1px dashed #333;
+	background-color:#eee;
+    
+    display: inline-block;
+    margin: 1em;
+}
+
+
+#div-1a
+{
+    border: 1px solid black;
+    width:333px;
+    background-color: #bababa;
+    
+    margin: 25px 0px 15px 15px;
+    float:left;
+    
+    padding-top: 100px;
+    text-align:center;
+}
+#div-1b
+{
+    border: 1px solid black;
+    width:275px;
+    background-color: #bababa; 
+    margin: 25px 0px 15px 15px;
+    padding: 10px;
+    float:left;
+    text-align:center;
+}
+
+#div-1d
+{
+    border: 1px solid black;
+    width:240px;
+    background-color: #bababa; 
+    margin: 25px 15px 15px 15px;
+    padding: 10px;
+    float:left;
+    text-align:center;
+}
+#div-1c
+{
+    border: 1px solid black;
+    clear:both;
+    background-color: #bababa;
+    margin: 15px 0px 15px 15px;
+    width:450px;    
+    float:left;
+}
+#div-1e
+{
+    border: 1px solid black;
+    background-color: #bababa;
+    margin: 15px 0px 15px 15px;
+    width:450px;    
+    float:left;
+}
+#div-1f
+{
+    border: 1px solid black;
+    clear:both;
+    background-color: #bababa;
+    width:900px;    
+    float:left;
+    
+    padding: 10px;
+        
+    margin: 15px 0px 15px 15px;
+}
+#tabela
+{
+    margin: 0px auto;
+    border: 2px solid black;
+    border-collapse: collapse;
+        
+    display: inline-block;
+    margin: 1em;
+    clear:both;
+/*    left: 200px;*/
+}
+
+#div-sum
+{
+    margin: 0px auto;
+    border: 1px solid black;
+    max-width:1000px;
+	text-align:left;
+	padding:15px;
+	background-color:#bababa;
+     
+    float:left;
+    clear:both;
+    display: inline-block;
+    margin: 1em;
+}
+
+#div-odb
+{
+    border: 1px solid black;
+    width:333px;
+	text-align:center;
+	padding:15px;
+    margin: 25px 0px 15px 15px;
+	background-color:#bababa;
+    float:left;
+    clear:both;
+    padding-top: 100px;
+
+}
+#div-wys
+{
+    border: 1px solid black;
+    width:333px;
+	text-align:center;
+	padding:15px;
+    margin: 25px 0px 15px 15px;
+	background-color:#bababa;
+        padding-top: 100px;
+    float:left;
+}
+</style>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>faktura</title>
+        <link rel="stylesheet" type="text/css" href="faktura.css">
+        <script src="faktura.js"></script>
+    </head>
+
+    <body onload="init()">
+        <div id="Content">
+            <div>
+                <div id="div-1a">
+                    <p>Pieczęć firmy<br></p>
+                </div>
+
+                <div id="div-1b">
+                    <p><b>Faktura</b></p>
+                </div>
+
+                <div id="div-1d">
+                    <p><b>Nr 1/01/2013</b></p>
+                </div>
+
+                <div id="div-1c">
+                    Sprzedawca: <b>Adam Nowak</b> <br>
+                    Adres: <b>ul. Nowoczesna 125, 12-345 Warszawa</b><br>
+                    NIP: <b>987-65-43-123</b>
+                </div>
+
+                <div id="div-1e">
+                    Nabywca: <b>Krzysztok Niewiadomski</b><br>
+                    Adres: <b>Księgowa 20, 12-345 Warszawa</b><br>
+                    NIP: 789-56-43-123
+                </div>
+
+                <div id="div-1f">
+                    Sposob płatności: <b>Przelew</b>
+                    Termin płatności: <b>2013-01-24</b><br>
+                    Bank: <b>mBank</b>
+                    Numer konta: <b>78 140 0000 0000 0000 1234 5678</b>
+                </div>
+
+            </div>
+
+
+            <div>
+                <br>
+                <table border="1" id="tabela">
+                    <tr style="background-color: #bababa;">
+                    <th>Lp.</th>
+                        <th>Nazwa</th>
+                        <th>PKWIU</th>
+                        <th>Ilość</th>
+                        <th>Jm</th>
+                        <th>Cena netto</th>
+                        <th>Wartość netto</th>
+                        <th>Stawka VAT</th>
+                        <th>Kwota VAT</th>
+                        <th>Wartość brutto</th>
+                    </tr>
+
+                </table>
+            </div>
+
+            <input type="button" id="txt-add" value="Dodaj pozycję" onclick="addTextFields()">
+            <div id="txt-fields">
+            </div>
+
+
+
+            <div id="div-sum">
+                
+            </div>
+
+            <div id="div-odb">
+            <p>Podpis odbiorcy</p>
+            </div>
+            <div id="div-wys">
+            <p>Podpis wystawiającego</p>
+            </div>
+
+
+        </div>
+    </body>
+</html>

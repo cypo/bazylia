@@ -1,0 +1,60 @@
+typ badan - tylko jedno do wyboru
+jak sie wybierze kilka uslug to ma byc kilka wpisow w bazie (kazda usluga osobny rekord)
+ukrycie 4 radio po wybraniu specjalityka
+cena do tabeli zarejestrowanych wizyt
+prywatna ->specjalistyka
+jesli wizyta prywatna to tylko wybór usług i data (bez kontrahenta)
+po zarejestrowaniu przycisk wystaw fakture
+dodaj pacjenta!
+firma ma byc dodana do bazy, ale domyslna firma dla osoby ma sie nie zmieniac
+jak sie wybierxe nową firme, to na fakturze dalej jest widoczna domyslna - POPRAWIĆ
+div rejestracji - powiększyć
+tabela usługi - opis niepotrzebny
+zmienic diva w rejestracji, na jakis kontenerek - ogarnięte paddingami w formie
+dodać sprawdzanie, czy firma wystepuje już w bazie (AJAX może? jakaś szukajka przed dodaniem nowej?) 
+- cookie nowaFirma - jest to samo dla 2 ostatnich, poprawic
+- validate form - waliduje za duzo (wszystko, nawet jak niezaznaczone)
+dodac "wyswietl fakture" w rozliczeniach
+po dodaniu pacjenta nic nie ma - przydałoby się coś - żeby go od razu zarejestrować albo coś
+rozliczenia:
+firma nazwisko imie pesel nazwa uslugi
+po rozwinieciu reszta
+dodać przeliczniki netto/brutto w fakturze
+opcj wystaw fakture - pytac
+DOMYSLA FIRMA - REJESTRUJE I TAK Z OSTATNIO DODANĄ - JAKAS LIPA
+rejestarcja - czasami puste :/ - kwestia tab[] - czasami wychodzi ujemna liczba? - brakowalo biblioteki popper.js
+jak się dodaje pacjenta to pole firma powinno szukac istniejacej firmy - jakos to trzeba rozbudowac - przy dodawaniu pacjenta nie wskazuje się firmy, dopiero przy rejestracji
+zmienic styl tabeli w szukajce pacjentow na taki jak jest w raportach
+confirm na fakturę w rozliczeniach
+jeśli faktura zostala wystawiona, to po kolejnym kliknięciu powinna być tylko wyświetlona - do zrobienia od nowa
+potwierdzenie przez rejestracją
+poprawic faktury - jak jest kilka uslug to wyswietla sie div w divie
+dac ajax albo cos na zaswiadczenie.php
+orzeczenie lekarzamedycyny pracy - dodać datę ważności orzeczenia - w rozliczeniach + kwadracik - niezdolny (orzeczenie negatywne) - 
+jak niewpisane zaswiadczenie to ma sie wyswietlac na czerwono - w rozliczenich
+orzeczenie - co jesli pacjent mial juz wczesniej orzeczenie? jak przyjdzie na kolejną wizytę to ma się ono resetować ? tak
+osobna tabela dla zaswiadczen
+historia zaswiadczen
+rozne ceny dla roznych firm
+jak sie wybierze specjalistyke, kliknie next, a pozniej wstecz to widacz wybor firmy - nie powinno tak byc
+---zrobione----------------------------------
+
+
+----w trakcie----
+
+-----------------
+z ulicy(bez umowy) / z umowa - inne ceny, dodac przy rejestracji - sprawdzac kolumne umowa w tabeli firm
+rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne
+podsumowanie przez zarejestrowaniem
+walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - POPRAWIĆ
+walidacja radio (firmy)
+logowanie - dokończyć
+ograniczenia dostępu
+zarejestrowane wizyty - zrobić switch na opisy (i posprawdzac wszedzie indziej)
+panel do dodawania firm/usług
+przycisk usun pacjenta nie dziala
+poprawić dalej/cofnij - cos tam się nakładają na siebie przyciski
+moze dodac js na cenamp/cena s - zeby sie podswietlalo odpowiednie
+faktura - dopracowac
+
+------------------------------------------------
