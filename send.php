@@ -254,7 +254,7 @@ foreach($_POST['uslugi'] as $usluga){
 	array_push($faktura, $id_ostatniej->id);
 	
 	if($_POST['rodzajWizyty']=='medycyna_pracy'){
-	    echo "dupa";
+
 		$zarejestrowana=ORM::for_table('rejestrwizyt')
 		->raw_query("SELECT pacjenci.imie, 
 		pacjenci.nazwisko, 
