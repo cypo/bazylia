@@ -181,10 +181,21 @@ $uslugiDB='';
 $pacjent->set('zasw_reset', 1);
 $pacjent->save();
 
-	
+	print_r($_POST['uslugi']);
 	
 foreach($_POST['uslugi'] as $usluga){
 	
+    if($_POST['rodzajWizyty']=='medycyna_pracy'){
+        $uslugaDB=ORM::for_table('uslugi_mp')->where('id', $usluga)->find_one();
+        echo "uslugi_mp";
+    
+    }else{
+        $uslugaDB=ORM::for_table('uslugi')->where('id', $usluga)->find_one();
+        echo "uslugi zwykle";
+    }
+    
+    
+    
 	$discountPrice=null;
 	$wizyta = ORM::for_table('rejestrWizyt')->create();
 
@@ -193,15 +204,22 @@ foreach($_POST['uslugi'] as $usluga){
 	$wizyta->rodzaj_wizyty = $_POST['rodzajWizyty'];
 	
 	
-	$uslugaDB=ORM::for_table('uslugi')->where('id', $usluga)->find_one();
+
+
+	//sprawdzanie czy jest umowa
+	$firma=ORM::for_table('firmy')->where('id', $_POST['idFirmy'])->find_one();
+	$umowa = $firma->umowa;
+	
+	echo "qqqqqqqqq".$uslugaDB->cena_rabat;
+	
 	
 	//sprawdzanie czy dla tej usługi firma ma inną cenę
-	$discounts=explode(',', $uslugaDB->cena_rabat);
+	$discounts=explode(',', $uslugaDB->cena_rabat);    
 	foreach($discounts as $discount){
 		
 		$discountArray = explode(':', $discount);
-		echo "<BR>1: ".$discountArray[0];
-		echo "<BR>2: ".$discountArray[1];
+		echo "<BR>1: ".$discountArray[0]; //id firmy
+		echo "<BR>2: ".$discountArray[1]; //cena
 		print_r($_SESSION);
 		if($_POST['idFirmy']==$discountArray[0]){
 			//jeśli tak, to będzie użyta ta cena
@@ -211,7 +229,7 @@ foreach($_POST['uslugi'] as $usluga){
 	}
 	
 	
-	if($_POST['rodzajWizyty']=='medycyna_pracy'){
+	if($umowa==1){
 		$wizyta->id_firmy = $_POST['idFirmy'];
 		$wizyta->typBadan = $_POST['typBadan'];
 		
@@ -232,10 +250,11 @@ foreach($_POST['uslugi'] as $usluga){
 
 
 	$id_ostatniej=ORM::for_table('rejestrwizyt')->select('id')->order_by_desc('id')->find_one();
-	
+
 	array_push($faktura, $id_ostatniej->id);
 	
 	if($_POST['rodzajWizyty']=='medycyna_pracy'){
+	    echo "dupa";
 		$zarejestrowana=ORM::for_table('rejestrwizyt')
 		->raw_query("SELECT pacjenci.imie, 
 		pacjenci.nazwisko, 
@@ -245,16 +264,17 @@ foreach($_POST['uslugi'] as $usluga){
 		pacjenci.zaswiadczenie, 
 		rejestrwizyt.rodzaj_wizyty,  
 		rejestrwizyt.typBadan,
-		uslugi.nazwa AS nazwaUslugi,
+		uslugi_mp.nazwa AS nazwaUslugi,
 		rejestrwizyt.data_wizyty,
 		rejestrwizyt.id_uslugi,
 		rejestrwizyt.cena
 		FROM rejestrwizyt
 		JOIN pacjenci ON pacjenci.id=rejestrwizyt.id_pacjenta
 		JOIN firmy ON firmy.id=rejestrwizyt.id_firmy
-		JOIN uslugi ON uslugi.id=rejestrwizyt.id_uslugi
+		JOIN uslugi_mp ON uslugi_mp.id=rejestrwizyt.id_uslugi
 		WHERE rejestrwizyt.id=$id_ostatniej->id")
 		->find_one();
+		
 	}
 	else{
 				$zarejestrowana=ORM::for_table('rejestrwizyt')
