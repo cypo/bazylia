@@ -185,23 +185,30 @@ $pacjent->save();
 	
 foreach($_POST['uslugi'] as $usluga){
 	
+    $discountPrice=null;
+    $wizyta = ORM::for_table('rejestrWizyt')->create();
+    
+    $wizyta->id_pacjenta = $_SESSION['id'];
+    $wizyta->id_uslugi = $usluga;
+    $wizyta->rodzaj_wizyty = $_POST['rodzajWizyty'];
+    
+    
+    
     if($_POST['rodzajWizyty']=='medycyna_pracy'){
         $uslugaDB=ORM::for_table('uslugi_mp')->where('id', $usluga)->find_one();
         echo "uslugi_mp";
+        $wizyta->id_firmy = $_POST['idFirmy'];
+        $wizyta->typBadan = $_POST['typBadan'];
     
     }else{
         $uslugaDB=ORM::for_table('uslugi')->where('id', $usluga)->find_one();
         echo "uslugi zwykle";
+        $wizyta->id_firmy = 99999;
     }
     
     
     
-	$discountPrice=null;
-	$wizyta = ORM::for_table('rejestrWizyt')->create();
 
-	$wizyta->id_pacjenta = $_SESSION['id'];
-	$wizyta->id_uslugi = $usluga;
-	$wizyta->rodzaj_wizyty = $_POST['rodzajWizyty'];
 	
 	
 
@@ -227,12 +234,9 @@ foreach($_POST['uslugi'] as $usluga){
 		}
 		
 	}
-	
+
 	
 	if($umowa==1){
-		$wizyta->id_firmy = $_POST['idFirmy'];
-		$wizyta->typBadan = $_POST['typBadan'];
-		
 		if($discountPrice==null) $wizyta->cena = $uslugaDB->cena_mp;
 		else $wizyta->cena = $discountPrice;
 	} 

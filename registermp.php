@@ -359,7 +359,7 @@ echo "<BR>";
 <?php
 //odczytywanie nazwy firmy przypisanej do pacjenta z bazy
 $firma=ORM::for_table('pacjenci')
-->join('firmy', array('pacjenci.firma', '=', 'firmy.nazwa'))
+->join('firmy', array('pacjenci.firma', '=', 'firmy.id'))
 ->where('pacjenci.id', $_POST['pacjentId'])
 ->find_one();
 

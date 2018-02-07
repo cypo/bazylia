@@ -56,5 +56,8 @@ przycisk usun pacjenta nie dziala
 poprawić dalej/cofnij - cos tam się nakładają na siebie przyciski
 moze dodac js na cenamp/cena s - zeby sie podswietlalo odpowiednie
 faktura - dopracowac
+try/catch na rejestracje koniecznie!
+faktura do poprawy
+nie wyswietlaja sie wizyty specjalistyka w rejestrze wizyt - dla specjalistyki wywala firme o id '0', zrobic jakas fikcyjna liczbe dla spec.
 
 ------------------------------------------------
