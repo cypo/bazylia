@@ -37,13 +37,17 @@ osobna tabela dla zaswiadczen
 historia zaswiadczen
 rozne ceny dla roznych firm
 jak sie wybierze specjalistyke, kliknie next, a pozniej wstecz to widacz wybor firmy - nie powinno tak byc
----zrobione----------------------------------
+nie wyswietlaja sie wizyty specjalistyka w rejestrze wizyt - dla specjalistyki wywala firme o id '0', zrobic jakas fikcyjna liczbe dla spec.
+z ulicy(bez umowy) / z umowa - inne ceny, dodac przy rejestracji - sprawdzac kolumne umowa w tabeli firm
+
+
+--zrobione----------------------------------
 
 
 ----w trakcie----
 
 -----------------
-z ulicy(bez umowy) / z umowa - inne ceny, dodac przy rejestracji - sprawdzac kolumne umowa w tabeli firm
+historia zaswiadczen nie dziala
 rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne
 podsumowanie przez zarejestrowaniem
 walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - POPRAWIĆ
@@ -58,6 +62,6 @@ moze dodac js na cenamp/cena s - zeby sie podswietlalo odpowiednie
 faktura - dopracowac
 try/catch na rejestracje koniecznie!
 faktura do poprawy
-nie wyswietlaja sie wizyty specjalistyka w rejestrze wizyt - dla specjalistyki wywala firme o id '0', zrobic jakas fikcyjna liczbe dla spec.
+
 
 ------------------------------------------------

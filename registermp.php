@@ -772,8 +772,12 @@ if($_COOKIE['nowaFirma']==1){
 else{
 
 }
-	if($_POST['rodzajWizyty']!='mp') $uslugi=ORM::for_table('uslugi')->find_array();
-	else $uslugi=ORM::for_table('uslugi_mp')->find_array();
+	if($_POST['rodzajWizyty']=='mp') $uslugi=ORM::for_table('uslugi')->where('mp', '1')->find_array();
+	else $uslugi=ORM::for_table('uslugi')->where('mp', '0')->find_array();
+	
+	
+	
+	
 	//echo $_SESSION['spec'];
 echo <<<END
 <p id="uslugiError">&nbsp;</p>

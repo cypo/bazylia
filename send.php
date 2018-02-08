@@ -57,6 +57,15 @@ ORM::configure('mysql:host=localhost;dbname=bazylia');
 ORM::configure('username', 'bazylia');
 ORM::configure('password', 'qwerty');
 ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+
+if($_POST['innaFirma']){
+    $idFirmy = $_POST['innaFirma'];
+}
+else{
+    $idFirmy = $_POST['idFirmy'];
+}
+
+
 ?>
 <center>
 <div class="container">
@@ -193,16 +202,16 @@ foreach($_POST['uslugi'] as $usluga){
     $wizyta->rodzaj_wizyty = $_POST['rodzajWizyty'];
     
     
-    
+    $uslugaDB=ORM::for_table('uslugi')->where('id', $usluga)->find_one();
     if($_POST['rodzajWizyty']=='medycyna_pracy'){
-        $uslugaDB=ORM::for_table('uslugi_mp')->where('id', $usluga)->find_one();
-        echo "uslugi_mp";
-        $wizyta->id_firmy = $_POST['idFirmy'];
+
+            $wizyta->id_firmy = $idFirmy;
+
+
+        
         $wizyta->typBadan = $_POST['typBadan'];
     
     }else{
-        $uslugaDB=ORM::for_table('uslugi')->where('id', $usluga)->find_one();
-        echo "uslugi zwykle";
         $wizyta->id_firmy = 99999;
     }
     
@@ -214,7 +223,7 @@ foreach($_POST['uslugi'] as $usluga){
 
 
 	//sprawdzanie czy jest umowa
-	$firma=ORM::for_table('firmy')->where('id', $_POST['idFirmy'])->find_one();
+	$firma=ORM::for_table('firmy')->where('id', $idFirmy)->find_one();
 	$umowa = $firma->umowa;
 	
 	echo "qqqqqqqqq".$uslugaDB->cena_rabat;
@@ -228,7 +237,7 @@ foreach($_POST['uslugi'] as $usluga){
 		echo "<BR>1: ".$discountArray[0]; //id firmy
 		echo "<BR>2: ".$discountArray[1]; //cena
 		print_r($_SESSION);
-		if($_POST['idFirmy']==$discountArray[0]){
+		if($idFirmy==$discountArray[0]){
 			//jeśli tak, to będzie użyta ta cena
 			$discountPrice=$discountArray[1];
 		}
@@ -268,14 +277,14 @@ foreach($_POST['uslugi'] as $usluga){
 		pacjenci.zaswiadczenie, 
 		rejestrwizyt.rodzaj_wizyty,  
 		rejestrwizyt.typBadan,
-		uslugi_mp.nazwa AS nazwaUslugi,
+		uslugi.nazwa AS nazwaUslugi,
 		rejestrwizyt.data_wizyty,
 		rejestrwizyt.id_uslugi,
 		rejestrwizyt.cena
 		FROM rejestrwizyt
 		JOIN pacjenci ON pacjenci.id=rejestrwizyt.id_pacjenta
 		JOIN firmy ON firmy.id=rejestrwizyt.id_firmy
-		JOIN uslugi_mp ON uslugi_mp.id=rejestrwizyt.id_uslugi
+		JOIN uslugi ON uslugi.id=rejestrwizyt.id_uslugi
 		WHERE rejestrwizyt.id=$id_ostatniej->id")
 		->find_one();
 		

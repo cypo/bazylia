@@ -140,8 +140,10 @@ ORM::configure('password', 'qwerty');
 ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 
 
-
-
+    $pacjenciBezZasw=ORM::for_table('pacjenci')->where('zasw_reset', '1')->find_many();
+    
+    
+    
 	$kolumny=ORM::for_table('rejestrwizyt')
 	->raw_query("SELECT 
 	rejestrwizyt.id,
@@ -155,14 +157,14 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 	rejestrwizyt.rodzaj_wizyty,  
 	rejestrwizyt.typbadan,
 	uslugi.nazwa AS nazwaUslugi,
-    uslugi_mp.nazwa AS nazwaUslugiMP,
+    uslugi.nazwa AS nazwaUslugi,
 	rejestrwizyt.data_wizyty
 	
 	FROM rejestrwizyt
 	JOIN pacjenci ON pacjenci.id=rejestrwizyt.id_pacjenta
 	JOIN firmy ON firmy.id=rejestrwizyt.id_firmy
 	JOIN uslugi ON uslugi.id=rejestrwizyt.id_uslugi
-    JOIN uslugi_mp ON uslugi_mp.id=rejestrwizyt.id_uslugi
+    
 	ORDER BY rejestrwizyt.id DESC"
 	)->find_many();
 
@@ -204,15 +206,15 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 	pacjenci.zasw_reset,
 	rejestrwizyt.rodzaj_wizyty,  
 	rejestrwizyt.typbadan,
-	uslugi.nazwa AS nazwaUslugi,
-    uslugi_mp.nazwa AS nazwaUslugiMP,
+    uslugi.nazwa AS nazwaUslugi,
 	rejestrwizyt.data_wizyty
 	
 	FROM rejestrwizyt
 	JOIN pacjenci ON pacjenci.id=rejestrwizyt.id_pacjenta
 	JOIN firmy ON firmy.id=rejestrwizyt.id_firmy
-	JOIN uslugi ON uslugi.id=rejestrwizyt.id_uslugi
-    JOIN uslugi_mp ON uslugi_mp.id=rejestrwizyt.id_uslugi
+    JOIN uslugi ON uslugi.id=rejestrwizyt.id_uslugi
+
+    
 	
 
 	ORDER BY rejestrwizyt.id DESC
@@ -223,6 +225,8 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 	)
 
 	->find_many();
+	
+	//print_r($rejestr);
 ?>
 <center>
 <div class="container">
@@ -425,7 +429,10 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
     // Display the paging information
     echo $prevlink, '<li class="page-item"><a class="page-link">Strona ', $page, ' z ', $pages, ', wyświetlanie ', $start, '-', $end, ' z ', $total, ' wyników </a></li>', $nextlink;
 
-
+    if($pacjenciBezZasw){
+        echo "Pacjenci bez zaswiadczenia: ".count($pacjenciBezZasw);
+    }
+    
 ?>
 </ul>
 </nav>
@@ -447,7 +454,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 			<tbody>
 
 			<?php
-			     echo "count:".count($rejestr);
+			    
 				$faktura_s=Array();
 				foreach($rejestr as $array => $v){
 					$fakturaExists = ORM::for_table('faktury')->raw_query('SELECT * FROM faktury WHERE id_wizyty LIKE \'%'.$v->id.'%\'')->find_one();
@@ -471,7 +478,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 					echo '</td>';					
 					echo '<td>';
 					if($v->rodzaj_wizyty=='medycyna_pracy'){
-					    echo $v->nazwaUslugiMP;
+					    echo $v->nazwaUslugi;
 					}
 					else{
 					    echo $v->nazwaUslugi;
