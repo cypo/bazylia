@@ -483,7 +483,9 @@ $firmaDetails=ORM::for_table('firmy')
 			<input id="radio-inna" name="radio-firma" type="radio" value ="inna" class="custom-control-input" data-toggle="collapse" data-target="#collapseFirmaZBazy" aria-expanded="false" aria-controls="collapseExample" onClick="hideInnaFirma();hideDomyslna();setCookie(2)";>
 			<span class="custom-control-indicator"></span>
 			<span class="custom-control-description">Użyj firmy z bazy danych</span>
+			<p id="innaFirmaError" style="float: right;">&nbsp;</p>
 		  </label>
+		 
 		</div>
 	
 		<div class="collapse" id="collapseFirmaZBazy">
@@ -909,6 +911,8 @@ specFlag = false;
 function nextPrev(n) {
 	spec = document.getElementById("specjalistyka");
 
+
+
   // This function will figure out which tab to display
   var x = document.getElementsByClassName("tab");
   // Exit the function if any field in the current tab is invalid:
@@ -946,6 +950,7 @@ function nextPrev(n) {
 
     
   }
+  
   // Otherwise, display the correct tab:
   showTab(currentTab);
   console.log(currentTab);
@@ -956,18 +961,42 @@ function nextPrev(n) {
 
 function validateForm() {
   // This function deals with validation of the form fields
+  var result=false;
   var x, y, i, valid = true;
-  flag = false;
-  medFlag = false;
-  x = document.getElementsByClassName("tab");
-  y = x[currentTab].getElementsByTagName("input");
-  z = document.getElementById("radio-inna");
-  med = document.getElementById("medycyna_pracy");
- 
+  var innaFirmaFlag=false;
+  var flag = false;
+  var medFlag = false;
+  var x = document.getElementsByClassName("tab");
+  var y = x[currentTab].getElementsByTagName("input");
+  var z = document.getElementById("radio-inna");
+  var med = document.getElementById("medycyna_pracy");
+	var radioInna = document.getElementById("radio-inna");
+	var innaFirmaRadios = document.getElementsByName("innaFirma");
+  	var radios = document.getElementsByName("typBadan");
+  	var typBadanError = document.getElementById("typBadanError");
+  	var innaFirmaError = document.getElementById("innaFirmaError");
+  	
 
-  radios = document.getElementsByName("typBadan");
-  typBadanError = document.getElementById("typBadanError");
+	if(radioInna.checked){
+		console.log('checked');
+		for(i=0; i<innaFirmaRadios.length; i++){
+			if(innaFirmaRadios[i].checked != true && innaFirmaFlag == false){
+				console.log('false');
+				innaFirmaError.innerHTML='<font color="red">Wybierz firmę!</font>';
+				result=false;
+			}
+			if(innaFirmaRadios[i].checked == true){
+				console.log('checkedradio');
+				console.log(innaFirmaRadios[i].id);
+				innaFirmaFlag=true;
+				result=true;
+			}
 
+		}
+		return result;
+	}
+
+  	
   //console.log(radios);
 
  // z = x[currentTab].getElementsByName("uslugi");
@@ -1032,10 +1061,11 @@ function validateForm() {
   
 
   // If the valid status is true, mark the step as finished and valid:
-  if (valid) {
+  if(valid) {
     document.getElementsByClassName("step")[currentTab].className += " finish";
 	typBadanError.innerHTML="";
   }
+
   
   
   return valid; // return the valid status

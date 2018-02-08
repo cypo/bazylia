@@ -20,6 +20,9 @@ html {
 	float: left;
 	
 }
+#innaFirmaError{
+	float: right;
+}
 
 td:first-child  {
   padding-top:10px;
