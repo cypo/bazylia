@@ -961,6 +961,8 @@ function nextPrev(n) {
 
 function validateForm() {
   // This function deals with validation of the form fields
+  var resultUslugi = false;
+  var uslugiFlag=false;
   var result=false;
   var x, y, i, valid = true;
   var innaFirmaFlag=false;
@@ -972,6 +974,7 @@ function validateForm() {
   var med = document.getElementById("medycyna_pracy");
 	var radioInna = document.getElementById("radio-inna");
 	var innaFirmaRadios = document.getElementsByName("innaFirma");
+	var uslugiRadios = document.getElementsByName("uslugi[]");
   	var radios = document.getElementsByName("typBadan");
   	var typBadanError = document.getElementById("typBadanError");
   	var innaFirmaError = document.getElementById("innaFirmaError");
@@ -995,8 +998,22 @@ function validateForm() {
 		}
 		return result;
 	}
-
-  	
+	
+if(currentTab==2){
+	console.log('dupa');
+	for(i=0; i<uslugiRadios.length; i++){
+		if(uslugiRadios[i].checked != true && uslugiFlag == false){
+			resultUslugi=false;
+		}
+		if(uslugiRadios[i].checked == true){
+			resultUslugi=true;
+			uslugiFlag=true;
+		}
+console.log(resultUslugi);
+	}
+	
+return resultUslugi;
+}
   //console.log(radios);
 
  // z = x[currentTab].getElementsByName("uslugi");

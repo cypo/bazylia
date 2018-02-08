@@ -42,6 +42,7 @@ z ulicy(bez umowy) / z umowa - inne ceny, dodac przy rejestracji - sprawdzac kol
 historia zaswiadczen - dziala tylko 1 wizyta - naprawic
 faktura do poprawy
 walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - POPRAWIĆ
+walidacja radio (firmy)
 --zrobione----------------------------------
 
 
@@ -51,8 +52,6 @@ walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - P
 
 rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne
 podsumowanie przez zarejestrowaniem
-
-walidacja radio (firmy)
 logowanie - dokończyć
 ograniczenia dostępu
 zarejestrowane wizyty - zrobić switch na opisy (i posprawdzac wszedzie indziej)
