@@ -291,19 +291,8 @@ body
 </style>
 <button onclick="window.print()">Drukuj fakturę</button><BR>
 <?php
-print_r($_POST);
-function debug($variable, $name){
-	If(is_array($variable)){
-		echo $name.":<BR>";
-		print "<pre>";
-		print_r($variable);
-		print "</pre>";
-	}
-	else{
-		echo $name.": ".$variable;
-	}
-	
-}
+ini_set('display_errors', 0);
+
 
 
 require('libs/idiorm.php');
@@ -363,14 +352,14 @@ $fakturaExists = ORM::for_table('faktury')
 		$faktura->id_wizyty = $id_wizyt;
 		$faktura->suma = $suma;
 		$faktura->save();
-		echo "faktura wystawiona";
+		//echo "faktura wystawiona";
 	}
 	else{
-		echo "wyświetlanie faktury";
+		//echo "wyświetlanie faktury";
 	}
 
 $daneFaktury=ORM::for_table('faktury')->where('id_wizyty', $id_wizyt)->find_one();
-echo "id wizyty na fakturze: ".$daneFaktury->id_wizyty;
+//echo "id wizyty na fakturze: ".$daneFaktury->id_wizyty;
 
 $numeryWizyt=substr($daneFaktury->id_wizyty, 0, -1);
 
@@ -388,15 +377,13 @@ WHERE rejestr.id IN ('.$numeryWizyt.')'
 )
 ->find_many();
 
-print_r($idWizytArray);
-print_r($numeryWizyt);
 
 foreach($wizyty as $wizyta){
 	array_push($idUslug, $wizyta->id_uslugi); /////////////////////////////////////////////moze tu zrobic asocjacje z id pacjenta?
 }
 $uslugiPogrupowane = array_count_values($idUslug);
-echo 'Ilosc rodzajow uslug: '.count($uslugiPogrupowane).'<br><br>';
-print_r($uslugiPogrupowane);
+//echo 'Ilosc rodzajow uslug: '.count($uslugiPogrupowane).'<br><br>';
+//print_r($uslugiPogrupowane);
 
 
 

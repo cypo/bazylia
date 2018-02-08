@@ -39,18 +39,19 @@ rozne ceny dla roznych firm
 jak sie wybierze specjalistyke, kliknie next, a pozniej wstecz to widacz wybor firmy - nie powinno tak byc
 nie wyswietlaja sie wizyty specjalistyka w rejestrze wizyt - dla specjalistyki wywala firme o id '0', zrobic jakas fikcyjna liczbe dla spec.
 z ulicy(bez umowy) / z umowa - inne ceny, dodac przy rejestracji - sprawdzac kolumne umowa w tabeli firm
-
-
+historia zaswiadczen - dziala tylko 1 wizyta - naprawic
+faktura do poprawy
+walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - POPRAWIĆ
 --zrobione----------------------------------
 
 
 ----w trakcie----
 
 -----------------
-historia zaswiadczen nie dziala
+
 rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne
 podsumowanie przez zarejestrowaniem
-walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - POPRAWIĆ
+
 walidacja radio (firmy)
 logowanie - dokończyć
 ograniczenia dostępu
@@ -61,7 +62,7 @@ poprawić dalej/cofnij - cos tam się nakładają na siebie przyciski
 moze dodac js na cenamp/cena s - zeby sie podswietlalo odpowiednie
 faktura - dopracowac
 try/catch na rejestracje koniecznie!
-faktura do poprawy
+
 
 
 ------------------------------------------------

@@ -862,7 +862,7 @@ END;
   
   </div>
   <div class="tab">Wybierz datę wizyty:
-	<input type="date" name="dataWizyty" required />
+	<input type="date" id="dataWizyty" name="dataWizyty" required />
 	<input type="hidden" name="finished" value="true" />
 					
   </div>
@@ -925,9 +925,21 @@ function nextPrev(n) {
   if (currentTab >= x.length) {
     // ... the form gets submitted:
 		var c = confirm("Zarejestrować pacjenta?");
+		var dataWizyty = document.getElementById("dataWizyty");
+		console.log(dataWizyty.value);
 		if (c == true) {
-			document.getElementById("regForm").submit();
-			return false;
+			if(dataWizyty.value!=''){
+    			document.getElementById("regForm").submit();
+    			return false;
+			}
+			else{
+				alert('Podaj datę wizyty!');
+				currentTab--;
+				showTab(currentTab);
+				console.log(currentTab);
+				return false;
+			}
+
 		} else {
 			currentTab--; 
 		}

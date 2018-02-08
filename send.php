@@ -44,7 +44,7 @@ else{
 </head>
 
 <?php
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 session_start();
 //print_r($_SESSION);
 
@@ -189,8 +189,6 @@ $uslugiDB='';
 
 $pacjent->set('zasw_reset', 1);
 $pacjent->save();
-
-	print_r($_POST['uslugi']);
 	
 foreach($_POST['uslugi'] as $usluga){
 	
@@ -205,10 +203,7 @@ foreach($_POST['uslugi'] as $usluga){
     $uslugaDB=ORM::for_table('uslugi')->where('id', $usluga)->find_one();
     if($_POST['rodzajWizyty']=='medycyna_pracy'){
 
-            $wizyta->id_firmy = $idFirmy;
-
-
-        
+        $wizyta->id_firmy = $idFirmy;
         $wizyta->typBadan = $_POST['typBadan'];
     
     }else{
@@ -225,18 +220,16 @@ foreach($_POST['uslugi'] as $usluga){
 	//sprawdzanie czy jest umowa
 	$firma=ORM::for_table('firmy')->where('id', $idFirmy)->find_one();
 	$umowa = $firma->umowa;
-	
-	echo "qqqqqqqqq".$uslugaDB->cena_rabat;
-	
+
 	
 	//sprawdzanie czy dla tej usługi firma ma inną cenę
 	$discounts=explode(',', $uslugaDB->cena_rabat);    
 	foreach($discounts as $discount){
 		
 		$discountArray = explode(':', $discount);
-		echo "<BR>1: ".$discountArray[0]; //id firmy
-		echo "<BR>2: ".$discountArray[1]; //cena
-		print_r($_SESSION);
+	//	echo "<BR>1: ".$discountArray[0]; //id firmy
+	//	echo "<BR>2: ".$discountArray[1]; //cena
+
 		if($idFirmy==$discountArray[0]){
 			//jeśli tak, to będzie użyta ta cena
 			$discountPrice=$discountArray[1];
@@ -335,7 +328,7 @@ foreach($_POST['uslugi'] as $usluga){
 
 
 $fakturaSerialized=serialize($faktura);
-print_r($faktura);
+
 ?>
 <script>
 function fakturaConfirm(){
