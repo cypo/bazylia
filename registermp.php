@@ -370,8 +370,8 @@ if($firma==null){
 $(document).ready(function() {
 $('#radioDomyslnaFirma').removeClass('visible').addClass('invisible');
 $('#tableDomyslnaFirma').removeClass('visible').addClass('invisible');
-$('#radio-inna').prop("checked", true);
-$('#collapseFirmaZBazy').collapse("show");
+//$('#radio-inna').prop("checked", true);
+$('#collapseFirmaZBazy').collapse("hide");
 });
 </script>	
 	
@@ -404,9 +404,6 @@ $firmaDetails=ORM::for_table('firmy')
 							echo "<th>";
 							
 							switch($v){
-								case "id":
-								echo "ID";
-								break;
 								
 								case "nazwa":
 								echo "nazwa firmy";
@@ -424,9 +421,6 @@ $firmaDetails=ORM::for_table('firmy')
 								echo "kod pocztowy";
 								break;
 								
-								case "regon":
-								echo "REGON";
-								break;
 								
 								case "nip":
 								echo "NIP";
@@ -434,10 +428,6 @@ $firmaDetails=ORM::for_table('firmy')
 								
 								case "ryczalt":
 								echo "ryczałt";
-								break;
-								
-								case "inne":
-								echo "inne";
 								break;
 								
 								
@@ -463,7 +453,9 @@ $firmaDetails=ORM::for_table('firmy')
 					//okreslanie ryczaltu (zmiana 1 na tak, 0 na nie)
 					if($q=='ryczalt' && $p==1) echo 'TAK';
 					else if($q=='ryczalt' && $p==0) echo 'NIE';
-					else echo $p;
+					else if($q=='umowa' && $p==1) echo "U";
+					else if($q=='nazwa' || $q=='ulica' || $q=='miasto' || $q=='kod' || $q=='nip') echo $p;
+					//else echo $p;
 					echo "</td>";
 					if($q=='id') {
 					    //echo "przypisuje";
@@ -508,10 +500,7 @@ $firmaDetails=ORM::for_table('firmy')
 								echo "<th>";
 								
 								switch($v){
-									case "id":
-									echo "ID";
-									break;
-									
+
 									case "nazwa":
 									echo "nazwa firmy";
 									break;
@@ -571,7 +560,9 @@ $firmaDetails=ORM::for_table('firmy')
 						//okreslanie ryczaltu (zmiana 1 na tak, 0 na nie)
 						if($k=='ryczalt' && $v==1) echo 'TAK';
 						else if($k=='ryczalt' && $v==0) echo 'NIE';
-						else echo $v;
+						else if($k=='umowa' && $v==1) echo "U";
+						else if($k=='nazwa' || $k=='ulica' || $k=='miasto' || $k=='kod' || $k=='nip') echo $v;
+						//else echo $v;
 						echo "</td>";
 						if($k=='id') {
 						//	$_SESSION['idFirmy']=$v; //przypisanie id firmy do sesji - do użycia przy rejestracji (nadpisane, jeśli zostanie wybrana inna firma)						
@@ -970,7 +961,7 @@ function validateForm() {
   var medFlag = false;
   var x = document.getElementsByClassName("tab");
   var y = x[currentTab].getElementsByTagName("input");
-  var z = document.getElementById("radio-inna");
+  //var z = document.getElementById("radio-inna");
   var med = document.getElementById("medycyna_pracy");
 	var radioInna = document.getElementById("radio-inna");
 	var innaFirmaRadios = document.getElementsByName("innaFirma");

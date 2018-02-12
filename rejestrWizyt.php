@@ -157,14 +157,13 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 	pacjenci.zasw_reset,
 	rejestrwizyt.rodzaj_wizyty,  
 	rejestrwizyt.typbadan,
-	uslugi.nazwa AS nazwaUslugi,
     uslugi.nazwa AS nazwaUslugi,
 	rejestrwizyt.data_wizyty
 	
 	FROM rejestrwizyt
 	JOIN pacjenci ON pacjenci.id=rejestrwizyt.id_pacjenta
 	JOIN firmy ON firmy.id=rejestrwizyt.id_firmy
-	JOIN uslugi ON uslugi.id=rejestrwizyt.id_uslugi
+    JOIN uslugi ON uslugi.id=rejestrwizyt.id_uslugi
     
 	ORDER BY rejestrwizyt.id DESC"
 	)->find_many();
@@ -226,8 +225,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 	)
 
 	->find_many();
-	
-	//print_r($rejestr);
+
 ?>
 <center>
 <div class="container">

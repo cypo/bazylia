@@ -43,6 +43,8 @@ historia zaswiadczen - dziala tylko 1 wizyta - naprawic
 faktura do poprawy
 walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - POPRAWIĆ
 walidacja radio (firmy)
+przycisk usun pacjenta nie dziala
+
 --zrobione----------------------------------
 
 
@@ -50,18 +52,12 @@ walidacja radio (firmy)
 
 -----------------
 
-rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne
-podsumowanie przez zarejestrowaniem
 logowanie - dokończyć
 ograniczenia dostępu
-zarejestrowane wizyty - zrobić switch na opisy (i posprawdzac wszedzie indziej)
 panel do dodawania firm/usług
-przycisk usun pacjenta nie dziala
-poprawić dalej/cofnij - cos tam się nakładają na siebie przyciski
-moze dodac js na cenamp/cena s - zeby sie podswietlalo odpowiednie
 faktura - dopracowac
 try/catch na rejestracje koniecznie!
-
-
-
+rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne
+podsumowanie przez zarejestrowaniem
+poprawić dalej/cofnij - cos tam się nakładają na siebie przyciski
 ------------------------------------------------

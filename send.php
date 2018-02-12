@@ -346,13 +346,13 @@ function fakturaConfirm(){
 
 </div> <!-- zielony -->
 </form>
-
+<!--
 <form action="faktura.php" method="POST" target="_blank" onSubmit="return fakturaConfirm();">
 <input type="hidden" name="faktura" value='<?php echo $fakturaSerialized ?>'/>
 <input type="submit" value="Faktura"/>
 
 </form>
-
+-->
 </td>
 </tr>
 </table>
