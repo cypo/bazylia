@@ -28,7 +28,7 @@ $pacjent->miasto = $_POST['miasto'];
 $pacjent->telefon = $_POST['telefon'];
 $pacjent->nip = $_POST['nip'];
 $pacjent->plec = $_POST['plec'];
-//$pacjent->firma	= $_POST['firma'];
+$pacjent->firma	= 99998;
 $pacjent->stanowisko = $_POST['stanowisko'];
 $pacjent->inne = $_POST['inne'];
 

@@ -19,6 +19,7 @@
 <body>
 
 <?php
+echo "LOGIN: ".$_SESSION['login'];
 if($_SESSION['login']!=1){
 ?>
 

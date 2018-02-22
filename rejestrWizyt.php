@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php session_start(); ?>
 <head>
 <head>
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
@@ -119,8 +120,23 @@ function addItem(item){
 	//dodac sprawdzanie czy item juz istnieje, jak tak to nie dodawac znowu
 	items.push(item);
 
-	$('#p-'+item).html("Dodano");
+	//$('#p-'+item).html("Dodano");
+	//$('#p-'+item).html("Dodano do faktury").removeClass("btn-outline-primary").addClass("btn-secondary").attr("disabled", true);
+	$('#p-'+item).removeClass("btn-outline-primary").addClass("btn-secondary").attr("disabled", true);
+	$('#v-'+item).removeClass("invisible").addClass("visible");
 	$('#trMain_'+item).css("background-color", "#adc4ea");
+}
+
+
+function removeItem(item){
+	var index = items.indexOf(item);
+
+	if (index > -1) {
+	    items.splice(index, 1);
+	}
+	$('#p-'+item).removeClass("btn-secondary").addClass("btn-outline-primary").attr("disabled", false);
+	$('#v-'+item).removeClass("visible").addClass("invisible");
+	$('#trMain_'+item).css("background-color", "");
 }
 function changeTrColor(nr, color){
 	$('#trMain_'+nr).css("background-color", color);
@@ -130,7 +146,7 @@ function changeTrColor(nr, color){
 
 
 <?php
-session_start();
+
 require('libs/idiorm.php');
 ini_set('display_errors', 0);
 $faktura=Array();
@@ -140,10 +156,9 @@ ORM::configure('username', 'bazylia');
 ORM::configure('password', 'qwerty');
 ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 
-
+    $user=ORM::for_table('users')->where('login', $_SESSION['user'])->find_one();
     $pacjenciBezZasw=ORM::for_table('pacjenci')->where('zasw_reset', '1')->find_many();
-    
-    
+
     
 	$kolumny=ORM::for_table('rejestrwizyt')
 	->raw_query("SELECT 
@@ -569,7 +584,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 						
 						
 
-						<button class="btn btn-success btn-sm" onClick="sendPost(<?php echo $v->pesel.','.$v->id;?>)">Ustaw</button>
+						<button class="btn btn-outline-success btn-sm" onClick="sendPost(<?php echo $v->pesel.','.$v->id;?>)">Ustaw</button>
 						<?php
 						
 					}
@@ -601,14 +616,21 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 						
 
 						if($fakturaExists==null){
-							echo '<button class="btn btn-primary btn-sm" onClick="addItem('.$v->id.')">dodaj do faktury</button>';
-							echo '<p id="p-'.$v->id.'"><p>';
+						    if($user->role==1){
+                                echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.')">dodaj do faktury</button>';
+                                echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">usuń z faktury</button>';
+							    //echo '<p id="p-'.$v->id.'"><p>';
+						    }
+						    else{
+                                echo '<button class="btn btn-outline-secondary btn-sm" disabled>Brak faktury</button>';   
+						    }
+
 						}
 						else{
 							echo '<form action="faktura.php" method="POST" target="_blank" onSubmit="return fakturaConfirm();">';
 																						//przekazuje numer faktury (String)
 							echo'<input type="hidden" name="fakturaWystawiona" value='.$fakturaExists->id.'>
-							<input type="submit" class="btn btn-primary btn-sm" value="Wyświetl fakturę"/>';
+							<input type="submit" class="btn btn-outline-primary btn-sm" value="Wyświetl fakturę"/>';
 
 							echo '</form>';
 
@@ -660,8 +682,8 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 						  </div>
 						</div>
 						<!-- koniec modala -->
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#historiaModal<?php echo $v->id?>">
-						historia
+						<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#historiaModal<?php echo $v->id?>">
+						historia orzeczeń
 						</button>
 
 <?php
@@ -679,7 +701,8 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 			?>
 
 
-					<button class="btn btn-success" onClick="return post(items);">Wystaw fakturę</button>
+					<button class="btn btn-outline-success" onClick="return post(items);">Wystaw fakturę</button>
+					<button class="btn btn-outline-danger" onClick="return remove(items);">Wyczysć</button>
 			</tbody>
 			</table>
 

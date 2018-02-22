@@ -29,11 +29,11 @@ ini_set('display_errors', 0);
 session_start();
 
 
-
+echo "LOGIN: ".$_SESSION['login'];
 
 //id pacjenta przypisywane do sesji - potrzebne ?
 if($_POST['id']){
-	session_unset();
+	//session_unset();
 	$_SESSION['id']=$_POST['id'];
 	
 }

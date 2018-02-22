@@ -44,6 +44,9 @@ faktura do poprawy
 walidacja daty wizyty required (data wizyty) jest nadpisywane przez submit() - POPRAWIĆ
 walidacja radio (firmy)
 przycisk usun pacjenta nie dziala
+logowanie - dokończyć
+ograniczenia dostępu
+
 
 --zrobione----------------------------------
 
@@ -52,8 +55,8 @@ przycisk usun pacjenta nie dziala
 
 -----------------
 
-logowanie - dokończyć
-ograniczenia dostępu
+rozwiązać jakoś brak fimry - czy ma sie zmieniac w bazie po zarejestrowaniu pacjenta ?
+
 panel do dodawania firm/usług
 faktura - dopracowac
 try/catch na rejestracje koniecznie!

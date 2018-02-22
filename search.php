@@ -52,7 +52,7 @@ ORM::configure('mysql:host=localhost;dbname=bazylia');
 ORM::configure('username', 'bazylia');
 ORM::configure('password', 'qwerty');
 ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
-
+echo "LOGIN: ".$_SESSION['login'];
 $searchArray = Array();
 
 if($_POST['pesel']!=null) $searchArray['pesel'] = "%".$_POST['pesel']."%";
@@ -71,7 +71,30 @@ if($_POST['lekarz']!=null) $searchArray['lekarz'] = "%".$_POST['lekarz']."%";
 
 
 if($_POST['zakres']=='all'){
-	$pacjenci=ORM::for_table('pacjenci')->find_array();	
+    $pacjenci=ORM::for_table('pacjenci')
+    ->select('firmy.nazwa', 'nazwaFirmy')
+    ->select('pacjenci.id')
+    ->select('pacjenci.imie')
+    ->select('pacjenci.nazwisko')
+    ->select('pacjenci.nr_karty')
+    ->select('pacjenci.pesel')
+    ->select('pacjenci.ulica')
+    ->select('pacjenci.kod_poczt')
+    ->select('pacjenci.miasto')
+    ->select('pacjenci.telefon')
+    ->select('pacjenci.nip')
+    ->select('pacjenci.plec')
+    ->select('pacjenci.firma')
+    ->select('pacjenci.stanowisko')
+    ->select('pacjenci.zaswiadczenie')
+    ->select('pacjenci.lekarz')
+    ->select('pacjenci.inne')
+    
+    
+    
+    
+    ->join('firmy', array('pacjenci.firma', '=', 'firmy.id'))->find_array();	
+  //  $pacjenci=ORM::for_table('pacjenci')->find_array();	
 } 
 else if($_POST['zakres']=='selected'){
 	///////try catch
@@ -418,7 +441,17 @@ Dodaj pacjenta 2
 						
 						echo '</td>';
 						echo '<td>';
-						echo $value;
+						if($key=='nazwaFirmy'){
+						    $nazwaFirmy=$value;
+						}
+						
+						if($key=='firma'){
+						    echo $nazwaFirmy;
+						}
+						if($key!='nazwaFirmy'){
+						    echo $value;
+						}
+						
 						echo '</td>';
 						echo '</tr>';
 						
