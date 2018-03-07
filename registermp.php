@@ -220,8 +220,8 @@ function show4radios(){
 <!-- <button onclick="document.location.href='index.php'" class="btn btn-outline-secondary">Cofnij</button> -->
 
 <?php
-ini_set('display_errors', 0);
-session_start();
+include 'include/phpheader.php';
+include 'include/db.php';
 
 
 echo "LOGIN: ".$_SESSION['login'];
@@ -232,12 +232,6 @@ if($_POST['id']){
 	$_POST['pacjentId']=$_POST['id'];
 	
 }
-require('libs/idiorm.php');
-
-ORM::configure('mysql:host=localhost;dbname=bazylia');
-ORM::configure('username', 'bazylia');
-ORM::configure('password', 'qwerty');
-ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 
 ?>
 <center>
@@ -275,8 +269,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 		<td width="20%" valign="top">
 
 <?php 
-
-
+//////////////WYSWIETLANIE DANYCH O PACJENCIE///////////////////////////
 $pacjent=ORM::for_table('pacjenci')->where('id', $_POST['pacjentId'])->find_one();
 $zaswExpired=false;
 if(strtotime($pacjent->zaswiadczenie)<time()){
@@ -295,6 +288,7 @@ Miasto: ".$pacjent->miasto."<BR>
 PESEL: ".$pacjent->pesel."<BR>
 Zaświadczenie: <font color=".$fontColor.">".$pacjent->zaswiadczenie."</font>";
 echo "<BR>";
+////////////////////////////////////////////////////////////////////////
 ?>
 </td>
 <td valign="top">
@@ -309,9 +303,9 @@ echo "<BR>";
     </div>
   </div>
   <?php
-
   if($_POST['rodzajWizyty']=='mp'){
     echo '<input type="hidden" name="rodzajWizyty" value="medycyna_pracy">';
+    
   ?>
   
   <div class="tab">
@@ -370,7 +364,6 @@ if($firma==null){
 $(document).ready(function() {
 $('#radioDomyslnaFirma').removeClass('visible').addClass('invisible');
 $('#tableDomyslnaFirma').removeClass('visible').addClass('invisible');
-//$('#radio-inna').prop("checked", true);
 $('#collapseFirmaZBazy').collapse("hide");
 });
 </script>	
@@ -870,7 +863,14 @@ END;
 </form>
 
 <script>
-var currentTab = 0; // Current tab is set to be the first tab (0)
+var mp = '<?php echo $_POST['rodzajWizyty'];?>';
+var currentTab = 0;
+if(mp == 'mp'){
+	 currentTab = 0;
+}
+else{
+	 currentTab = 1; // Current tab is set to be the first tab (0)
+}
 showTab(currentTab); // Display the crurrent tab
 
 
