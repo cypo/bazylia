@@ -2,6 +2,9 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 <style>
 
 body
@@ -258,7 +261,7 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 
 
     <body>
-    <button id="drukuj">Drukuj fakturę</button><BR>
+    <button id="drukuj" class="btn btn-outline-info">Drukuj fakturę</button><BR>
         <div id="Content">
             <div>
 					<div style="float:left">
@@ -382,7 +385,7 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 
             <div style="padding-top: 120px;">
 
-                <table border="1" id="tabela" >
+                <table border="1" id="tabela" style="border-collapse: collapse;" cellpadding="5">
                     <tr >
                     <th>Lp.</th>
                         <th>Nazwa</th>
@@ -484,10 +487,11 @@ function printInvoice(){
 }
 
 function PrintElem(){
-	console.log('kkk');
     var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
     mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    mywindow.document.write('<style>body{font-family: Arial;}</style>');
+    
     mywindow.document.write('</head><body >');
     mywindow.document.write('<h1>' + document.title  + '</h1>');
     mywindow.document.write(document.getElementById('Content').innerHTML);
