@@ -1,170 +1,20 @@
 <!DOCTYPE html>
-
-
-<script>
-
-var SUMA = 0.0;
-
-function init()
-{
-    document.getElementById("txt-add").disabled = false;
-
-    var parent = document.getElementById("div-sum");
-
-    var elem = document.createElement("p");
-    elem.appendChild(document.createTextNode("Razem do zapłaty: " + SUMA.toString() + "zł."));
-
-    parent.appendChild(elem);
-}
- 
-function addTextFields()
-{
-    var parent = document.getElementById("txt-fields");
-    
-    var header = ["Lp.", "Nazwa", "PKWIU", "Ilość", "Jm", "Cena netto",  "Wartość netto ",  "Stawka VAT",  "Kwota VAT",   "Wartość brutto"];
-
-    for(var i = 0; i < 10; i++)
-    {
-        var elem = document.createElement("input");
-        elem.setAttribute('type', 'text');
-        elem.setAttribute('id', 'fd'+i.toString());
-
-        parent.appendChild(elem);
-        parent.insertBefore(document.createTextNode(header[i]), elem);
-        parent.appendChild(document.createElement("br"));
-
-    }
-
-    var elem3 = document.createElement("input");
-    elem3.setAttribute('type', 'button');
-    elem3.setAttribute('value', 'Dodaj');
-    elem3.setAttribute('onclick', 'showText()');
-    parent.appendChild(elem3);
- 
-    var btn = document.getElementById("txt-add");
-    btn.disabled = true;
-}
- 
-function foo(array)
-{
-    var elem = document.createElement("tr");
-    var elems = []
- 
-    for(var i = 0; i < 10; i++)
-    {
-        elems.push(document.createElement("td"));
-        elems[i].appendChild(document.createTextNode(array[i].toString()));
-        elem.appendChild(elems[i]);
-    }
- 
-    var parent = document.getElementById("tabela");
-    parent.appendChild(elem);
-}
-
-function isPositiveInteger(n) {
-    return 0 === n % (!isNaN(parseFloat(n)) && 0 <= ~~n);
-}
-function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function validate(array)
-{
-    //lp
-    if(!isPositiveInteger(array[0]))
-        return false;
-    //nazwa
-    if(isNumeric(array[1]))
-        return false;
-    //pkwiu
-    if(isNumeric(array[2]))
-        return false;
-    // //ilosc
-    if(!isPositiveInteger(array[3]))
-        return false;
-    // //jm
-    if(isNumeric(array[2]))
-        return false;
-    // //cena netto
-    if(!(isNumeric(array[5]) && parseFloat(array[5]) > 0.0))
-        return false;
-    // //wartosc netto
-    if(!(isNumeric(array[6]) && parseFloat(array[6]) > 0.0))
-        return false;
-    // //stawka vat
-    if(!isPositiveInteger(array[7]))
-        return false;
-    // //kwota vat
-    if(!(isNumeric(array[8]) && parseFloat(array[8]) > 0.0))
-        return false;
-    // //wartosc brutto
-    if(!(isNumeric(array[9]) && parseFloat(array[9]) > 0.0))
-        return false;
-
-    return true;
-}
-
-function showText()
-{
-    var popup_message = "";
-    var a = []
-    for(var i = 0; i < 10; i++)
-    {
-    //     popup_message += i.toString() + ": " + document.getElementById('fd'+i.toString()).value + "\n";
-        a.push(document.getElementById('fd'+i.toString()).value);
-    }
-
-    if(!validate(a))
-    {
-        alert("Podałeś niepoprawne dane!");
-
-        var parent = document.getElementById("txt-fields");
-
-        while (parent.firstChild) {
-            parent.removeChild(parent.firstChild);
-        }
-
-        var btn = document.getElementById("txt-add");
-        btn.disabled = false;
-        return;
-    }
-
-    foo(a);
-
-    SUMA += parseFloat(a[9]);
-
-    var parent = document.getElementById("txt-fields");
-
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-
-    parentSum = document.getElementById("div-sum");
-
-    while (parentSum.firstChild) {
-        parentSum.removeChild(parentSum.firstChild);
-    }
-
-    var elem = document.createElement("p");
-    elem.appendChild(document.createTextNode("Razem do zapłaty: " + SUMA.toString()+ "zł"));
-
-    parentSum.appendChild(elem);
-
-    var btn = document.getElementById("txt-add");
-    btn.disabled = false;
-}
-
-</script>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 
 body
 {
     margin:50px 0px; padding:0px;
     text-align:center;
+    font-family: Arial;
 }
 	
 #Content {
+min-width:800px;
 	max-width:1000px;
+	height:950px;
 	text-align:left;
 	padding:15px;
 	border:1px dashed #333;
@@ -289,11 +139,15 @@ body
     float:left;
 }
 </style>
-<button onclick="window.print()">Drukuj fakturę</button><BR>
+</head>
+
+
+
+
 <?php
 ini_set('display_errors', 0);
 
-
+include 'libs/slownie.php';
 
 require('libs/idiorm.php');
 
@@ -361,6 +215,8 @@ $fakturaExists = ORM::for_table('faktury')
 $daneFaktury=ORM::for_table('faktury')->where('id_wizyty', $id_wizyt)->find_one();
 //echo "id wizyty na fakturze: ".$daneFaktury->id_wizyty;
 
+$dataWystawienia=explode(" ",$daneFaktury->data);
+
 $numeryWizyt=substr($daneFaktury->id_wizyty, 0, -1);
 
 $numeryWizytArray = explode(',', $numeryWizyt); //nieuzywany juz chyba - uzyty jednak 
@@ -370,7 +226,7 @@ $rodzajWizyty;
 
 $wizyty = ORM::for_table('rejestrwizyt')
 ->raw_query('
-SELECT rejestr.rodzaj_wizyty, rejestr.id_uslugi, firmy.id as fId, firmy.ulica AS fUlica, firmy.kod, firmy.nazwa, firmy.miasto as fMiasto, firmy.kod, firmy.regon, firmy.nip, pacjenci.imie, pacjenci.nazwisko, pacjenci.firma, pacjenci.ulica AS pUlica, pacjenci.kod_poczt, pacjenci.miasto AS pMiasto FROM `rejestrwizyt` AS `rejestr`
+SELECT rejestr.rodzaj_wizyty, rejestr.data_wizyty, rejestr.id_uslugi, firmy.id as fId, firmy.ulica AS fUlica, firmy.kod, firmy.nazwa, firmy.miasto as fMiasto, firmy.kod, firmy.regon, firmy.nip, pacjenci.imie, pacjenci.nazwisko, pacjenci.firma, pacjenci.ulica AS pUlica, pacjenci.kod_poczt, pacjenci.miasto AS pMiasto FROM `rejestrwizyt` AS `rejestr`
 JOIN `pacjenci` ON rejestr.id_pacjenta = pacjenci.id 
 JOIN `firmy` ON rejestr.id_firmy = firmy.id
 WHERE rejestr.id IN ('.$numeryWizyt.')'
@@ -399,42 +255,88 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 
 
 
-<html lang="pl">
-    <head>
-        <meta charset="utf-8">
-        <title>faktura</title>
-        <link rel="stylesheet" type="text/css" href="faktura.css">
-        <script src="faktura.js"></script>
-    </head>
 
-    <body onload="init()">
+
+    <body>
+    <button id="drukuj">Drukuj fakturę</button><BR>
         <div id="Content">
             <div>
-                <div id="div-1a">
-                    <p>Pieczęć firmy<br></p>
-                </div>
+					<div style="float:left">
+                    Zakład Opieki Zdrowotnej "Bazylia"<br>
+					Specjalistyczne Usługi Medyczne<br>
+                    ul. A. Struga 23, 95-100 Zgierz<br>
+                    NIP: 735-151-40-46<br>
 
-                <div id="div-1b">
+
                     <p><b>Faktura Nr <?php echo $daneFaktury->id; ?></b></p>
-                </div>
+					</div>
+					<div style="float:right">
+					<table>
+					<tr>
+					<td>
+					Data wystawienia:
+					</td>
+					<td>
+					<?php echo $dataWystawienia[0]; ?>
+					</td>
+					</tr>
+					<tr>
+					<td>
+					Miejsce wystawienia:
+					</td>
+					<td>
+					ZGIERZ
+					</td>
+					</tr>					
+					<tr>
+					<td>
+					Data dostawy <BR>lub wykonania usługi:
+					</td>
+					<td>
+					<?php echo $wizyty[0]->data_wizyty; ?>
+					</td>
+					</tr>					
+					<tr>
+					<td>
+					Termin zapłaty:
+					</td>
+					<td>
+					<?php echo date('Y-m-d', strtotime($dataWystawienia[0]. ' + 14 days')); ?>
+					</td>
+					</tr>						
+					<tr>
+					<td>
+					Sposób zapłaty:
+					</td>
+					<td>
+					Przelew 14 dni
+					</td>
+					</tr>						
+					</table>
 
+					
+					
+					 
+					
+					</div><BR><BR><BR><BR><BR><BR><BR><BR>
+<hr>
     
 
-                <div id="div-1c">
+                <div style="float:left">
 				Sprzedawca:<br>
-                    <b>Zakład Opieki Zdrowotnej "Bazylia"</b> <br>
-					<b>Specjalistyczne Usługi Medyczne</b> <br>
-                    <b>ul. A. Struga 23, 95-100 Zgierz</b><br>
-                    NIP: <b>735-151-40-46</b>
+					Zakład Opieki Zdrowotnej "Bazylia"<br>
+					Specjalistyczne Usługi Medyczne<br>
+                    ul. A. Struga 23, 95-100 Zgierz<br>
+                    NIP: 735-151-40-46<br>
                 </div>
 
-                <div id="div-1d">
+                <div style="float:right; padding-right:100px">
 				Nabywca:<br>
 				<?php
 
 				if($wizyty[0]->rodzaj_wizyty=="medycyna_pracy"){
 					//firma
-					echo "<B>";
+
 					echo $wizyty[0]->nazwa;
 					echo "<BR>"; 
 					echo $wizyty[0]->fUlica;
@@ -446,7 +348,7 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					echo "<BR>";
 					echo "NIP: ";
 					echo $wizyty[0]->nip;					
-					echo "</B>";
+
 					
 				}
 				else{
@@ -475,13 +377,13 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 
              
 
-            </div>
 
 
-            <div>
-                <br>
-                <table border="1" id="tabela">
-                    <tr style="background-color: #bababa;">
+
+            <div style="padding-top: 120px;">
+
+                <table border="1" id="tabela" >
+                    <tr >
                     <th>Lp.</th>
                         <th>Nazwa</th>
                         <th>Cena netto</th>
@@ -549,17 +451,55 @@ foreach($listaUslug as $usluga){
 ?>
                 </table>
             </div>
-                <div id="div-sum">
-                    <p><b>SUMA: <?php echo sprintf('%.2f', $daneFaktury->suma); ?>zł.</b></p>
+                <div style="float:right">
+                    <p><b>Do zapłaty: <?php echo sprintf('%.2f', $daneFaktury->suma); ?>zł.</b></p>
+                    <p>Słownie: <?php echo slownie($daneFaktury->suma)?></p>
                 </div>
-            <div id="div-odb">
-            <p>Podpis odbiorcy</p>
+                <BR><BR><BR><BR><BR><BR><BR><BR><BR>
+            <div style="float:left; padding-left:70px;">
+            <center><p>Jacek Pacyna</p></center>
+            <hr>
+            <center><p>Podpis osoby upoważnionej<BR>
+            do wystawienia dokumentu</p></center>
             </div>
-            <div id="div-wys">
-            <p>Podpis wystawiającego</p>
+            
+            <div style="float:right; padding-left:100px; padding-right:70px;">
+            <p>&nbsp;</p>
+                        <hr>
+            <center><p>Podpis osoby upoważnionej<BR>
+            do odbioru dokumentu</p></center>
             </div>
 
 
         </div>
     </body>
+    <script type="text/javascript">
+
+
+document.getElementById('drukuj').addEventListener("click", PrintElem);
+
+function printInvoice(){
+	$('#drukuj').addClass("invisible");
+	window.print();
+}
+
+function PrintElem(){
+	console.log('kkk');
+    var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1>' + document.title  + '</h1>');
+    mywindow.document.write(document.getElementById('Content').innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+}
+</script>
 </html>
