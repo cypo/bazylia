@@ -46,7 +46,7 @@ walidacja radio (firmy)
 przycisk usun pacjenta nie dziala
 logowanie - dokończyć
 ograniczenia dostępu
-
+specjalistyka - tam nie ma orzeczeń, ma sie nie podswietlac na czerwono
 
 --zrobione----------------------------------
 
