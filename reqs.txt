@@ -47,20 +47,40 @@ przycisk usun pacjenta nie dziala
 logowanie - dokończyć
 ograniczenia dostępu
 specjalistyka - tam nie ma orzeczeń, ma sie nie podswietlac na czerwono
+zarejestrowane wizyty -> zrealizowane wizyty
+
 
 --zrobione----------------------------------
 
 
 ----w trakcie----
-
+FAKTURA:
+Data dostawy lub wykonania usługi: albo caly miesiac, albo data wystawienia faktury
+termin zaplaty: 7/14/30 dni
+sposob zaplaty: gotowka/przelew 7/14/30
+numer_faktury/rok/F
 -----------------
 
-rozwiązać jakoś brak fimry - czy ma sie zmieniac w bazie po zarejestrowaniu pacjenta ?
+zmiana orzeczenia tylko dla jednej konkretnej uslugi (orxeczenie lekarza med prac) - zrobione (send.php if($uslugaDB->nazwa=='badaniemp2'))
+
+
+
+na recepcji mozliwosc wystawiania faktur tylko dla prywatnych wizyt
+chorób wewnętrzych - *intern*, *medycyny pracy*
+
+
+JESLI FIRMA MA RABAT NA USLUGE TO MUSI MIEC POLE UMOWA=1 - INACZEJ ZOSTANIE POLICZONA JAKO FIRMA BEZ UMOWY (NAJWYZSZA CENA)
+przy rejestracji wywalic kolumne z rabatami (przy wyborze usług), co z ceną MP/S ?
+
+rozwiązać jakoś brak fimry - czy ma sie zmieniac w bazie po zarejestrowaniu pacjenta ? TAK
 
 panel do dodawania firm/usług
 faktura - dopracowac
 try/catch na rejestracje koniecznie!
-rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne
+rozne usługi - rozne stawki vat - dopisac w bazie nowa kolumne - niektore bedania maja 0%, a inne 23%
 podsumowanie przez zarejestrowaniem
 poprawić dalej/cofnij - cos tam się nakładają na siebie przyciski
+rejestracja kilku uslug - div w divie - poprawic
+dodac wszedzie include na leftmenu, itp
+ogolna refaktoryzacja kodu
 ------------------------------------------------

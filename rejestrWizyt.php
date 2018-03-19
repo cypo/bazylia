@@ -16,6 +16,25 @@
 
 </head>
 <script>
+
+function printInvoiceItem(item){
+	console.log("aaaaaa");
+	var div = document.getElementById("invoiceDiv");
+	var pNull = document.createElement("p");
+	var nodeNull = document.createTextNode("Nie wybrano żadnych wizyt do zafakturowania!");
+	pNull.appendChild(nodeNull);
+	div.appendChild(pNull);
+	if(item!=null){
+		var p = document.createElement("p");
+		var node = document.createTextNode(item);
+		p.appendChild(node);
+		div.appendChild(p);
+		pNull.removeChild(nodeNull);
+		div.removeChild(pNull);
+	}
+	
+}
+
 function sendPost(pesel, vid){
 	console.log("sendPost");
 	var zaswData = $('#zaswData'+vid).val();
@@ -617,7 +636,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 
 						if($fakturaExists==null){
 						    if($user->role==1){
-                                echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.')">dodaj do faktury</button>';
+                                echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.'); printInvoiceItem('.$v->id.')">dodaj do faktury</button>';
                                 echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">usuń z faktury</button>';
 							    //echo '<p id="p-'.$v->id.'"><p>';
 						    }
@@ -701,8 +720,52 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 			?>
 
 
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
 					<button class="btn btn-outline-success" onClick="return post(items);">Wystaw fakturę</button>
 					<button class="btn btn-outline-danger" onClick="return remove(items);">Wyczysć</button>
+					
+					<!-- Modal -->
+						<div class="modal fade" id="fakturaModal" tabindex="-1" role="dialog" aria-labelledby="fakturaModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<h5 class="modal-title" id="fakturaModalLabel">Wystawianie faktury</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								  <span aria-hidden="true">&times;</span>
+								</button>
+							  </div>
+							  <div class="modal-body" id="invoiceDiv">
+								<script>
+									printInvoiceItem(null);
+								</script>
+								<!-- printInvoiceItem() printuje tutaj dodane pozycje -->									
+						
+							  </div>
+							        <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                    <button class="btn btn-outline-success" onClick="return post(items);">Wystaw fakturę</button>
+                            		 <!-- formularz do zrobienia do obsłużenia submita -->	
+                                  </div>
+							</div>
+						  </div>
+						</div>
+						<!-- koniec modala -->
+						<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#fakturaModal">
+						Wystaw fakturę
+						</button>
 			</tbody>
 			</table>
 

@@ -15,10 +15,10 @@
     <a class="nav-link active" href="main.php">Wyszukaj pacjenta</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="rejestrWizyt.php">Zarejestrowane wizyty</a>
+    <a class="nav-link" href="rejestrWizyt.php">Zrealizowane wizyty</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Raporty</a>
+    <a class="nav-link" href="raporty.php">Raporty</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled" href="logout.php">Wyloguj</a>

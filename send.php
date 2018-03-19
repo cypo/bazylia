@@ -201,9 +201,10 @@ foreach($_POST['uslugi'] as $usluga){
     
     $uslugaDB=ORM::for_table('uslugi')->where('id', $usluga)->find_one();
     if($_POST['rodzajWizyty']=='medycyna_pracy'){
-        $pacjent->set('zasw_reset', 1);
-        $pacjent->save();
-
+        if($uslugaDB->nazwa=='badaniemp2'){
+            $pacjent->set('zasw_reset', 1);
+            $pacjent->save();
+        }
         $wizyta->id_firmy = $idFirmy;
         $wizyta->typBadan = $_POST['typBadan'];
     
