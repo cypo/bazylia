@@ -143,7 +143,7 @@ if($_COOKIE['nowaFirma']==1){
 		
 		$nowaFirma=ORM::for_table('pacjenci')->where('id', $_SESSION['id'])->find_one();
 
-		$nowaFirma->set('firma', $_POST['_nazwa']);
+		$nowaFirma->set('firma', $idFirmy);
 		$nowaFirma->save();
 		
 	}
@@ -151,6 +151,10 @@ if($_COOKIE['nowaFirma']==1){
 }
 else if($_COOKIE['nowaFirma']==2){
 	$_POST['idFirmy'] = $_POST['innaFirma'];
+	
+	$nowaFirma=ORM::for_table('pacjenci')->where('id', $_SESSION['id'])->find_one();
+	$nowaFirma->set('firma', $idFirmy);
+	$nowaFirma->save();
 }
 else{
 	
@@ -325,6 +329,11 @@ foreach($_POST['uslugi'] as $usluga){
 	echo "Usługa: ".$uslugaDB->nazwa."<BR>";
 	echo "Cena: ".$zarejestrowana->cena."<BR>";
 	echo "Data wizyty: ".$zarejestrowana->data_wizyty."<BR>";
+	
+	?>
+	</div> <!-- zielony -->
+	<?php 
+	
 }
 
 
@@ -346,7 +355,7 @@ function fakturaConfirm(){
 
 </script>
 
-</div> <!-- zielony -->
+
 </form>
 <!--
 <form action="faktura.php" method="POST" target="_blank" onSubmit="return fakturaConfirm();">

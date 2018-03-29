@@ -1,38 +1,84 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <?php session_start(); ?>
 <head>
-<head>
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+-->
+
+
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
-</head>
 
 
-</head>
-<script>
+
+
+<script type="text/javascript">
+var items = new Array();
+function addItem(item){
+	//dodac sprawdzanie czy item juz istnieje, jak tak to nie dodawac znowu
+	items.push(item);
+
+	//$('#p-'+item).html("Dodano");
+	//$('#p-'+item).html("Dodano do faktury").removeClass("btn-outline-primary").addClass("btn-secondary").attr("disabled", true);
+	$('#p-'+item).removeClass("btn-outline-primary").addClass("btn-secondary").attr("disabled", true);
+	$('#v-'+item).removeClass("invisible").addClass("visible");
+	$('#trMain_'+item).css("background-color", "#adc4ea");
+}
+
+var data_uslugi = '';
+var termin_zaplaty = '';
+var sposob_zaplaty = '';
+
+function setInvoice(setting, value){
+
+	if(setting == 'data'){
+		data_uslugi = value;
+		console.log(value);
+	}
+	else if(setting == 'termin'){
+		termin_zaplaty = value;
+		console.log(value);
+	}
+	else if(setting == 'zaplata'){
+		sposob_zaplaty = value;
+		console.log(value);
+	}
+	console.log(data_uslugi);
+	console.log(termin_zaplaty);
+	console.log(sposob_zaplaty);
+
+}
+
 
 function printInvoiceItem(item){
-	console.log("aaaaaa");
 	var div = document.getElementById("invoiceDiv");
-	var pNull = document.createElement("p");
-	var nodeNull = document.createTextNode("Nie wybrano żadnych wizyt do zafakturowania!");
-	pNull.appendChild(nodeNull);
-	div.appendChild(pNull);
+	if(items.length == 0){
+    	var pNull = document.createElement("p");
+    	pNull.setAttribute("id", "de");
+    	var nodeNull = document.createTextNode("Nie wybrano żadnych wizyt do zafakturowania!");
+    	pNull.style.color = "red";
+    	pNull.appendChild(nodeNull);
+    	div.appendChild(pNull);
+	}
+	else{
+		$('#de').addClass('invisible');
+	}
+	/*
 	if(item!=null){
 		var p = document.createElement("p");
 		var node = document.createTextNode(item);
 		p.appendChild(node);
 		div.appendChild(p);
-		pNull.removeChild(nodeNull);
-		div.removeChild(pNull);
+
+		$('#de').addClass('invisible');
 	}
-	
+	*/
 }
 
 function sendPost(pesel, vid){
@@ -45,27 +91,46 @@ function sendPost(pesel, vid){
 								
 	});
 }
-</script>
-<script>
+
 var divId;
-var items = new Array();
-function post(array) {
+
+function post(array, data) {
 	if(array.length!=0){
 
     var form = document.createElement("form");
     form.setAttribute("method", 'POST');
     form.setAttribute("action", 'faktura.php');
-
+	var arrayKey = 1;
     for(var key in array) {
         if(array.hasOwnProperty(key)) {
             var hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("name", arrayKey);
             hiddenField.setAttribute("value", array[key]);
 
             form.appendChild(hiddenField);
         }
+        arrayKey++;
     }
+    var data_uslugi = document.createElement("input");
+    data_uslugi.setAttribute("type", "hidden");
+    data_uslugi.setAttribute("name", "data_uslugi_h");
+    data_uslugi.setAttribute("value", data);
+
+    var termin = document.createElement("input");
+    termin.setAttribute("type", "hidden");
+    termin.setAttribute("name", "termin_zaplaty_h");
+    termin.setAttribute("value", termin_zaplaty);
+
+    var sposob = document.createElement("input");
+    sposob.setAttribute("type", "hidden");
+    sposob.setAttribute("name", "sposob_zaplaty_h");
+    sposob.setAttribute("value", sposob_zaplaty);  
+    
+	form.appendChild(data_uslugi);
+	form.appendChild(termin);
+	form.appendChild(sposob);
+    
     document.body.appendChild(form);
     form.submit();
 	}
@@ -135,16 +200,7 @@ function orzeczenieToggle(){
 	
 }
 
-function addItem(item){
-	//dodac sprawdzanie czy item juz istnieje, jak tak to nie dodawac znowu
-	items.push(item);
 
-	//$('#p-'+item).html("Dodano");
-	//$('#p-'+item).html("Dodano do faktury").removeClass("btn-outline-primary").addClass("btn-secondary").attr("disabled", true);
-	$('#p-'+item).removeClass("btn-outline-primary").addClass("btn-secondary").attr("disabled", true);
-	$('#v-'+item).removeClass("invisible").addClass("visible");
-	$('#trMain_'+item).css("background-color", "#adc4ea");
-}
 
 
 function removeItem(item){
@@ -162,8 +218,8 @@ function changeTrColor(nr, color){
 }
 
 </script>
-
-
+</head>
+<body>
 <?php
 
 require('libs/idiorm.php');
@@ -492,24 +548,24 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 				foreach($rejestr as $array => $v){
 					$fakturaExists = ORM::for_table('faktury')->raw_query('SELECT * FROM faktury WHERE id_wizyty LIKE \'%'.$v->id.'%\'')->find_one();
 					
-					echo '<tr id="trMain_'.$v->id.'" onClick="return showContent('.$v->id.')">';
+					echo '<tr id="trMain_'.$v->id.'" >';
 					
-					echo '<td>';
+					echo '<td onClick="return showContent('.$v->id.')">';
 					echo $v->id;
 					echo '</td>';
-					echo '<td>';
+					echo '<td onClick="return showContent('.$v->id.')">';
 					echo $v->nazwaFirmy;
 					echo '</td>';					
-					echo '<td>';
+					echo '<td onClick="return showContent('.$v->id.')">';
 					echo $v->nazwisko;
-					echo '</td>';					
-					echo '<td>';
+					echo '</td >';					
+					echo '<td onClick="return showContent('.$v->id.')">';
 					echo $v->imie;
 					echo '</td>';					
-					echo '<td>';
+					echo '<td onClick="return showContent('.$v->id.')">';
 					echo $v->pesel;
 					echo '</td>';					
-					echo '<td>';
+					echo '<td onClick="return showContent('.$v->id.')">';
 					if($v->rodzaj_wizyty=='medycyna_pracy'){
 					    echo $v->nazwaUslugi;
 					}
@@ -520,11 +576,34 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 					echo '</td>';
 					echo '<td>';
 					if($fakturaExists){
-						echo "T";						
+					    
+					    $rok = explode(" ", $fakturaExists->data);
+					    $rok = explode("-", $rok[0]);
+					    $rok = $rok[0];
+					    echo '<form action="faktura.php" method="POST" target="_blank" onSubmit="return fakturaConfirm();">';
+					    //przekazuje numer faktury (String)
+					    echo'<input type="hidden" name="fakturaWystawiona" value='.$fakturaExists->id.'>
+							<input type="submit" class="btn btn-outline-dark btn-sm" value="'.$fakturaExists->id.'/'.$rok.'"/>';
+					    
+					    echo '</form>';
+					    
+					    
 					}
 					else{
-						echo '<font color="red">N</font>';
-						
+					    if($v->rodzaj_wizyty =='medycyna_pracy'){
+					        if($user->role==1){
+        					    echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.'); printInvoiceItem('.$v->id.')">Wystaw</button>';
+        					    echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">X</button>';
+        					}
+        					else{
+        					    echo '<button class="btn btn-outline-secondary btn-sm" disabled>Brak faktury</button>';
+        				    }
+					    }
+					    else{
+					        echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.'); printInvoiceItem('.$v->id.')">Wystaw</button>';
+					        echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">X</button>';
+					        
+					    }
 					}
 					echo '</td>';
 		
@@ -635,14 +714,23 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 						
 
 						if($fakturaExists==null){
-						    if($user->role==1){
-                                echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.'); printInvoiceItem('.$v->id.')">dodaj do faktury</button>';
-                                echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">usuń z faktury</button>';
-							    //echo '<p id="p-'.$v->id.'"><p>';
+						    if($v->rodzaj_wizyty =='medycyna_pracy'){
+						        if($user->role==1){
+						           // echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.'); printInvoiceItem('.$v->id.')">dodaj do faktury</button>';
+						           // echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">usuń z faktury</button>';
+						            //echo '<p id="p-'.$v->id.'"><p>';
+						        }
+						        else{
+						           // echo '<button class="btn btn-outline-secondary btn-sm" disabled>Brak faktury</button>';
+						        }
 						    }
 						    else{
-                                echo '<button class="btn btn-outline-secondary btn-sm" disabled>Brak faktury</button>';   
+						       // echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.'); printInvoiceItem('.$v->id.')">dodaj do faktury</button>';
+						      //  echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">usuń z faktury</button>';
+						        
 						    }
+						    
+
 
 						}
 						else{
@@ -734,8 +822,8 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 
 
 
-					<button class="btn btn-outline-success" onClick="return post(items);">Wystaw fakturę</button>
-					<button class="btn btn-outline-danger" onClick="return remove(items);">Wyczysć</button>
+			<!-- 		<button class="btn btn-outline-success" onClick="return post(items, data_zaplatys);">Wystaw fakturę</button> -->
+				<!-- 	<button class="btn btn-outline-danger btn-sm" onClick="return remove(items);">Wyczysć</button> -->
 					
 					<!-- Modal -->
 						<div class="modal fade" id="fakturaModal" tabindex="-1" role="dialog" aria-labelledby="fakturaModalLabel" aria-hidden="true">
@@ -748,15 +836,56 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 								</button>
 							  </div>
 							  <div class="modal-body" id="invoiceDiv">
+						<!-- 	  Wybrane wizyty do zafakturowania:<BR><BR> -->
 								<script>
 									printInvoiceItem(null);
 								</script>
-								<!-- printInvoiceItem() printuje tutaj dodane pozycje -->									
-						
+								<!-- printInvoiceItem() printuje tutaj dodane pozycje -->	
+								Data dostawy lub wykonania usługi:	<BR>
+								<label class="custom-control custom-radio">
+                    			  <input id="miesiac" name="data_uslugi_r" type="radio" class="custom-control-input" value="miesiac" onClick='setInvoice("data", "miesiac");'>
+                    			  <span class="custom-control-indicator"></span>
+                    			  <span class="custom-control-description">cały miesiąc</span>
+                    			</label>
+                    			
+                    			<label class="custom-control custom-radio">
+                    			  <input id="data_faktury" name="data_uslugi_r" type="radio" class="custom-control-input" value="data_faktury" onClick='setInvoice("data", "data_faktury");'>
+                    			  <span class="custom-control-indicator"></span>
+                    			  <span class="custom-control-description">data wystawienia faktury</span>
+                    			</label>
+                    			<BR>
+                    			Termin zapłaty:	<BR>
+								<label class="custom-control custom-radio">
+                    			  <input id="termin7" name="termin_zaplaty_r" type="radio" class="custom-control-input" value="7" onClick='setInvoice("termin", "7");'>
+                    			  <span class="custom-control-indicator"></span>
+                    			  <span class="custom-control-description">7 dni</span>
+                    			</label>
+                    			<label class="custom-control custom-radio">
+                    			  <input id="termin14" name="termin_zaplaty_r" type="radio" class="custom-control-input" value="14" onClick='setInvoice("termin", "14");'>
+                    			  <span class="custom-control-indicator"></span>
+                    			  <span class="custom-control-description">14 dni</span>
+                    			</label>
+                    			<label class="custom-control custom-radio">
+                    			  <input id="termin30" name="termin_zaplaty_r" type="radio" class="custom-control-input" value="30" onClick='setInvoice("termin", "30");'>
+                    			  <span class="custom-control-indicator"></span>
+                    			  <span class="custom-control-description">30 dni</span>
+                    			</label>
+                    			<BR>
+                    			Sposób zapłaty:	<BR>
+								<label class="custom-control custom-radio">
+                    			  <input id="gotowka" name="sposob_zaplaty_r" type="radio" class="custom-control-input" value="gotowka" onClick='setInvoice("zaplata", "gotowka");'>
+                    			  <span class="custom-control-indicator"></span>
+                    			  <span class="custom-control-description">gotówka</span>
+                    			</label>	
+								<label class="custom-control custom-radio">
+                    			  <input id="przelew" name="sposob_zaplaty_r" type="radio" class="custom-control-input" value="przelew" onClick='setInvoice("zaplata", "przelew");'>
+                    			  <span class="custom-control-indicator"></span>
+                    			  <span class="custom-control-description">przelew</span>
+                    			</label>							
 							  </div>
 							        <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                                    <button class="btn btn-outline-success" onClick="return post(items);">Wystaw fakturę</button>
+                                    <button class="btn btn-outline-success" onClick="return post(items, data_uslugi);">Wystaw fakturę</button>
                             		 <!-- formularz do zrobienia do obsłużenia submita -->	
                                   </div>
 							</div>
@@ -776,4 +905,5 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 
 
 </table>
+
 

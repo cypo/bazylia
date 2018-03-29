@@ -20,6 +20,21 @@
 	</style>
 	
 <script type="text/javascript" language="JavaScript">
+function getFirma(id){
+	console.log("sendPost");
+	var zaswData = $('#zaswData'+vid).val();
+	$.post("zaswiadczenie.php", {zaswData:zaswData, peselPacjenta:pesel}, function(){
+	location.reload();
+	//alert(divId);
+	//window.setTimeout(function(){$('#div_'+divId).collapse("show")}, 3000); //to nie działa
+								
+	});
+}
+
+
+
+
+
 document.cookie="nowaFirma=0";
 
 
@@ -629,7 +644,7 @@ function setCookie(x){
 	//alert(document.cookie);
 }
 
-</script>
+</script> 
 <div class="collapse" id="collapseInnaFirma">
   <div class="card card-body">
 	Podaj dane firmy:<BR><BR>
@@ -774,7 +789,7 @@ END;
 			
 			$columns = ORM::for_table('uslugi')->raw_query('SHOW columns FROM uslugi')->find_array();
 
-			
+/*			
 			foreach($columns as $key => $value){
 				//echo $key."<BR>";
 				//echo $value."<BR>";
@@ -793,11 +808,11 @@ END;
 							break;
 
 							case "cena_mp":
-							echo "Cena MP";
+							//echo "Cena MP";
 							break;
 							
 							case "cena_inne":
-							echo "Cena S";
+							//echo "Cena S";
 							break;
 							
 							case "icd":
@@ -816,6 +831,20 @@ END;
 					}
 				}
 			}
+			
+			*/
+            			echo "<th>";
+            			echo "ID";
+            			echo "</th>";
+            			echo "<th>";
+            			echo "Nazwa usługi";
+            			echo "</th>";
+            			echo "<th>";
+            			echo "Cena";
+            			echo "</th>";
+            			echo "<th>";
+            			echo "ICD";
+            			echo "</th>";
 						echo "<th>";
 						echo "Wybierz";
 						echo "</th>";
@@ -829,10 +858,31 @@ END;
 					echo "<tr>";
 					//$checkBoxName='';
 					foreach($v as $key => $value){
-						
+					/*	
 						echo "<td>";
 						echo $value;
 						echo "</td>";
+*/      
+					  //  echo "<BR>KEY: ".$key."<BR>";
+						if($key == 'id' || $key == 'nazwa' || $key =='icd'){
+						    echo "<td>";
+						    echo $value;
+						    echo "</td>";
+						}
+						if($key =='cena_mp'){
+						    //cena dla firm z umowa
+						}
+						if($key =='cena_inne'){
+						    //cena dla firm bez umowy
+						}
+						if($key=='cena_rabat'){
+						    //cena z rabatem
+						}
+						
+						
+						
+						
+						
 						if($key=='id')$checkBoxName=$value;
 						
 					}

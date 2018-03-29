@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+<?php 
+//print_r($_POST);
+
+?>
 <style>
 
 body
@@ -175,7 +180,15 @@ else{
 	}
 	//jesli POST pochodzi z rejestrWizyt.php
 	else{
-		$idWizytArray=$_POST;
+	    $idWizytArray=Array();
+	    foreach($_POST as $key => $value){
+	        if($key =="data_uslugi_h" || $key =="termin_zaplaty_h" || $key == "sposob_zaplaty_h"){
+	            
+	        }
+	        else{
+	            array_push($idWizytArray, $value);
+	        }
+	    }
 	}
 	
 }
@@ -267,11 +280,11 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					<div style="float:left">
                     Zakład Opieki Zdrowotnej "Bazylia"<br>
 					Specjalistyczne Usługi Medyczne<br>
-                    ul. A. Struga 23, <br>95-100 Zgierz<br>
+                    ul. A. Struga 23 <br>95-100 Zgierz<br>
                     NIP: 735-151-40-46<br>
 
 
-                    <p><b>Faktura Nr <?php echo $daneFaktury->id; ?></b></p>
+                    <p><b>Faktura Nr <?php echo $daneFaktury->id."/".date('Y'); ?></b></p>
 					</div>
 					<div style="float:right">
 					<table>
@@ -293,10 +306,70 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					</tr>					
 					<tr>
 					<td>
-					Data dostawy <BR>lub wykonania usługi:
+					Data wykonania usługi:
 					</td>
 					<td>
-					<?php echo $wizyty[0]->data_wizyty; ?>
+					<?php 
+					if($_POST['data_uslugi_h'] == 'data_faktury'){
+					    echo date('Y-m-d');
+					}
+					if($_POST['data_uslugi_h'] == 'miesiac'){
+					    switch (date('m')){
+					        case '01':
+					            echo "styczeń ";
+					            echo date('Y');
+					            break; 
+					        case '02':
+					            echo "luty ";
+					            echo date('Y');
+					            break;
+					        case '03':
+					            echo "marzec ";
+					            echo date('Y');
+					            break;
+					        case '04':
+					            echo "kwiecień ";
+					            echo date('Y');
+					            break;
+					        case '05':
+					            echo "maj ";
+					            echo date('Y');
+					            break;
+					        case '06':
+					            echo "czerwiec ";
+					            echo date('Y');
+					            break;
+					        case '07':
+					            echo "lipiec ";
+					            echo date('Y');
+					            break;
+					        case '08':
+					            echo "sierpień ";
+					            echo date('Y');
+					            break;
+					        case '09':
+					            echo "wrzesień ";
+					            echo date('Y');
+					            break;
+					        case '10':
+					            echo "październik ";
+					            echo date('Y');
+					            break;
+					        case '11':
+					            echo "listopad ";
+					            echo date('Y');
+					            break;
+					        case '12':
+					            echo "grudzień ";
+					            echo date('Y');
+					            break;
+            
+					            
+					    }
+					   // echo date('m');
+					}
+					
+					?>
 					</td>
 					</tr>					
 					<tr>
@@ -304,7 +377,7 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					Termin zapłaty:
 					</td>
 					<td>
-					<?php echo date('Y-m-d', strtotime($dataWystawienia[0]. ' + 14 days')); ?>
+					<?php echo date('Y-m-d', strtotime($dataWystawienia[0]. ' + '.$_POST["termin_zaplaty_h"].' days')); ?>
 					</td>
 					</tr>						
 					<tr>
@@ -312,7 +385,16 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					Sposób zapłaty:
 					</td>
 					<td>
-					Przelew 14 dni
+					<?php 
+					if($_POST['sposob_zaplaty_h'] == 'gotowka'){
+					    echo 'gotówka';
+					}
+					if($_POST['sposob_zaplaty_h'] == 'przelew'){
+					    echo "Przelew ".$_POST["termin_zaplaty_h"]." dni";
+					}
+					
+					?>
+					
 					</td>
 					</tr>						
 					</table>
@@ -329,7 +411,7 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 				Sprzedawca:<br>
 					Zakład Opieki Zdrowotnej "Bazylia"<br>
 					Specjalistyczne Usługi Medyczne<br>
-                    ul. A. Struga 23,<br> 95-100 Zgierz<br>
+                    ul. A. Struga 23<br> 95-100 Zgierz<br>
                     NIP: 735-151-40-46<br>
                 </div>
 

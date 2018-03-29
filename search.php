@@ -448,7 +448,7 @@ Dodaj pacjenta 2
 						if($key=='firma'){
 						    echo $nazwaFirmy;
 						}
-						if($key!='nazwaFirmy'){
+						if($key!='nazwaFirmy' && $key != 'firma'){
 						    echo $value;
 						}
 						
