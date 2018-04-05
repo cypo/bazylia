@@ -245,6 +245,9 @@ $fakturaExists = ORM::for_table('faktury')
 		$faktura = ORM::for_table('faktury')->create();
 		$faktura->id_wizyty = $id_wizyt;
 		$faktura->suma = $suma;
+		////////////////////////////////termin/sposob do bazy (ustawic wyzej w petli ustawienie zmiennych)///////////////////////////////
+//		$faktura->termin = 
+//		$faktura->sposob = 
 		$faktura->save();
 		//echo "faktura wystawiona";
 	}

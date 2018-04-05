@@ -20,6 +20,9 @@
 	</style>
 	
 <script type="text/javascript" language="JavaScript">
+function unClickAll(){
+	$( "input[name='innaFirma']" ).prop('checked', false);
+}
 function getFirma(id){
 	console.log("sendPost");
 	var zaswData = $('#zaswData'+vid).val();
@@ -359,7 +362,7 @@ echo "<BR>";
   <div class="tab">
   <div class="custom-controls-stacked" id="radioDomyslnaFirma">
 			  <label class="custom-control custom-radio">
-				<input id="radio-baza"  name="radio-firma" type="radio" class="custom-control-input" value="baza" onClick="hideInnaFirma();hideZBazy();setCookie(0);" checked>
+				<input id="radio-baza"  name="radio-firma" type="radio" class="custom-control-input" value="baza" onClick="hideInnaFirma();hideZBazy();setCookie(0);unClickAll();" checked>
 				<span class="custom-control-indicator"></span>
 				<span class="custom-control-description">Użyj domyślnej firmy:</span>
 			  </label>
@@ -480,7 +483,7 @@ $firmaDetails=ORM::for_table('firmy')
 
 		<div class="custom-controls-stacked">
 		  <label class="custom-control custom-radio">
-			<input id="radio-inna" name="radio-firma" type="radio" value ="inna" class="custom-control-input" data-toggle="collapse" data-target="#collapseFirmaZBazy" aria-expanded="false" aria-controls="collapseExample" onClick="hideInnaFirma();hideDomyslna();setCookie(2)";>
+			<input id="radio-inna" name="radio-firma" type="radio" value ="inna" class="custom-control-input" data-toggle="collapse" data-target="#collapseFirmaZBazy" aria-expanded="false" aria-controls="collapseExample" onClick="hideInnaFirma();hideDomyslna();setCookie(2);unClickAll()">
 			<span class="custom-control-indicator"></span>
 			<span class="custom-control-description">Użyj firmy z bazy danych</span>
 			<p id="innaFirmaError" style="float: right;">&nbsp;</p>
