@@ -1,0 +1,133 @@
+#regForm {
+  background-color: #000000;
+  margin: 100px auto;
+  
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+.opis{
+	float: left;
+	
+}
+
+
+.form{
+	float: left;
+	
+}
+.testform{
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0px !important;	
+}
+#innaFirmaError{
+	float: right;
+}
+
+td:first-child  {
+  padding-top:10px;
+}
+.tdPaddingLeft{
+	padding-left:10px;
+	
+}
+
+.tableMain{
+	
+	min-width:400px;
+	table-layout: fixed
+}
+
+
+.dodajPacjenta{
+	float: right;
+}
+	
+.btn-link{
+  border:none;
+  outline:none;
+  background:none;
+  cursor:pointer;
+  color:#0000EE;
+  padding:0;
+  text-decoration:underline;
+  font-family:inherit;
+  font-size:inherit;
+}
+
+.hover-hand{
+	
+	cursor: pointer;
+	cursor: hand;
+}
+
+
+
+#innaFirmaSubmit{
+	width:50px;	
+}
+
+.fa-check-square{
+	color: green;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+
+#typBadanError{
+	color: red;
+}
+
+
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;  
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4CAF50;
+}
