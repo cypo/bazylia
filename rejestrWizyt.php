@@ -12,9 +12,9 @@
 <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
 
 
 
@@ -322,13 +322,13 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 <div class="jumbotron" style="padding-top: 10px;">
 <table border="0" width="1000">
 	<tr>
-		<td width="1000" colspan="2">
+		<td width="1000">
 		
 		
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2">
+		<td>
 		<ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link" href="main.php">Wyszukaj pacjenta</a>
@@ -340,7 +340,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
     <a class="nav-link" href="#">Raporty</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="logout.php">Wyloguj</a>
+    <a class="nav-link disabled" href="logout.php">Wyloguj [<?php echo $_SESSION['user'];?>]</a>
   </li>
 </ul>
 		</td>
@@ -348,157 +348,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 	
 	</tr>
 	<tr height="500">
-		<td width="25%" valign="top">
-			<form action="search.php" method="POST"> 
-			<table>
-				<tr>
-					<td  class="tdPadding">
-					
-						PESEL:<BR> <!-- to obowiazkowe -->
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="pesel"/>
-					</td>
-					
-				</tr>
-				<tr>
-					<td>
-						Nr karty: <BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="numerKarty"/>
-					</td>
-					
-				</tr>
-				<tr>
-					<td>
-						Imię:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="imie"/>
-					</td>
-					
-				</tr>
-				<tr>
-					<td>
-						Nazwisko:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="nazwisko"/>
-					</td>
-					
-				</tr>
-				<tr>
-					<td>
-						Ulica:<BR>
-
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="ulica"/>
-
-					</td>
-					
-				</tr>
-				<tr>
-					<td>
-						Miasto:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="miasto"/>
-
-					</td>
-					
-				</tr>		
-				<tr>
-					<td>
-						Kod-poczt.:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="kod-pocztowy"/>
-
-					</td>
-					
-				</tr>
-				
-				<tr>
-					<td>
-						telefon:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="telefon"/>
-
-					</td>
-					
-				</tr>
-				<tr>
-					<td>
-						nip:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="nip"/>
-
-					</td>
-					
-				</tr>		
-				<tr>
-					<td>
-						firma:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="firma"/>
-
-					</td>
-					
-				</tr>	
-				<tr>
-					<td>
-						stanowisko:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="stanowisko"/>
-
-					</td>
-					
-				</tr>	
-				<!--
-				<tr>
-					<td>
-						zaswiadczenie:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="zaswiadczenie"/>
-
-					</td>
-					
-				</tr>
--->				
-				<!--
-				<tr>
-					<td>
-						lekarz orzekający:<BR>
-					</td>
-					<td>
-						<input type="text" class="form-control form-control-sm" name="lekarz"/>
-
-					</td>
-					
-				</tr>					
-				-->
-			</table>
-						
-				
-					<input type="hidden" name="zakres" value="selected"/>
-					<input type="submit" class="btn btn-success" value="Szukaj"/>
-				</form>
-				
-				<form action="search.php" method="POST"> 
-					<input type="hidden" name="zakres" value="all"/>
-					<input type="submit" class="btn btn-primary" value="Wszystkie"/>
-				</form>
-				</div>
-			
-		</td>
-
+		
 
 		<td valign="top" class="tdPaddingLeft">
 		
@@ -506,7 +356,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 		
 		
 		<nav aria-label="Page navigation example">
-  <ul class="pagination">
+  <ul class="pagination" style="float:left">
 		
 <?php
   // The "back" link
@@ -517,14 +367,19 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 
     // Display the paging information
     echo $prevlink, '<li class="page-item"><a class="page-link">Strona ', $page, ' z ', $pages, ', wyświetlanie ', $start, '-', $end, ' z ', $total, ' wyników </a></li>', $nextlink;
+    echo '
 
+</ul>
+</nav>
+
+';
     if($pacjenciBezZasw){
-        echo "Pacjenci bez zaswiadczenia: ".count($pacjenciBezZasw);
+        echo '<h5 align="right" style="float:right">Pacjenci bez zaswiadczenia: <span class="badge badge-secondary">'.count($pacjenciBezZasw).'</span></h5>';
     }
     
 ?>
-</ul>
-</nav>
+<BR>
+<BR>
 <BR>
 <table border="0" class="table table-sm hover-hand table-striped">
 			<thead class="thead-default">
@@ -548,8 +403,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 				foreach($rejestr as $array => $v){
 					$fakturaExists = ORM::for_table('faktury')->raw_query('SELECT * FROM faktury WHERE id_wizyty LIKE \'%'.$v->id.'%\'')->find_one();
 					
-					echo '<tr id="trMain_'.$v->id.'" >';
-					
+					echo '<tr id="trMain_'.$v->id.'">';
 					echo '<td onClick="return showContent('.$v->id.')">';
 					echo $v->id;
 					echo '</td>';
@@ -580,7 +434,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 					    $rok = explode(" ", $fakturaExists->data);
 					    $rok = explode("-", $rok[0]);
 					    $rok = $rok[0];
-					    echo '<form action="faktura.php" method="POST" target="_blank" onSubmit="return fakturaConfirm();">';
+					    echo '<form action="faktura.php" method="POST" style="margin-bottom:0;" target="_blank" onSubmit="return fakturaConfirm();">';
 					    //przekazuje numer faktury (String)
 					    echo'<input type="hidden" name="fakturaWystawiona" value='.$fakturaExists->id.'>
 							<input type="submit" class="btn btn-outline-dark btn-sm" value="'.$fakturaExists->id.'/'.$rok.'"/>';
@@ -596,8 +450,10 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
         					    echo '<button id="v-'.$v->id.'" class="btn btn-outline-danger btn-sm invisible" onClick="removeItem('.$v->id.')">X</button>';
         					}
         					else{
+        					    
         					    echo '<button class="btn btn-outline-secondary btn-sm" disabled>Brak faktury</button>';
-        				    }
+        				        
+        					}
 					    }
 					    else{
 					        echo '<button id="p-'.$v->id.'" class="btn btn-outline-primary btn-sm" onClick="addItem('.$v->id.'); printInvoiceItem('.$v->id.')">Wystaw</button>';

@@ -15,10 +15,17 @@ html {
 	float: left;
 	
 }
-	
+
+
 .form{
 	float: left;
 	
+}
+.testform{
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0px !important;	
 }
 #innaFirmaError{
 	float: right;

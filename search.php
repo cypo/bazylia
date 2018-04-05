@@ -52,7 +52,7 @@ ORM::configure('mysql:host=localhost;dbname=bazylia');
 ORM::configure('username', 'bazylia');
 ORM::configure('password', 'qwerty');
 ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
-echo "LOGIN: ".$_SESSION['login'];
+//echo "LOGIN: ".$_SESSION['login'];
 $searchArray = Array();
 
 if($_POST['pesel']!=null) $searchArray['pesel'] = "%".$_POST['pesel']."%";

@@ -20,6 +20,12 @@
 	</style>
 	
 <script type="text/javascript" language="JavaScript">
+function unClickAll(){
+	//$('#radio-baza').prop('checked', false);
+	$( "input[name='innaFirma']" ).prop('checked', false);
+}
+
+
 function getFirma(id){
 	console.log("sendPost");
 	var zaswData = $('#zaswData'+vid).val();
@@ -359,7 +365,7 @@ echo "<BR>";
   <div class="tab">
   <div class="custom-controls-stacked" id="radioDomyslnaFirma">
 			  <label class="custom-control custom-radio">
-				<input id="radio-baza"  name="radio-firma" type="radio" class="custom-control-input" value="baza" onClick="hideInnaFirma();hideZBazy();setCookie(0);" checked>
+				<input id="radio-baza"  name="radio-firma" type="radio" class="custom-control-input" value="baza" onClick="hideInnaFirma();hideZBazy();setCookie(0);unClickAll();" checked>
 				<span class="custom-control-indicator"></span>
 				<span class="custom-control-description">Użyj domyślnej firmy:</span>
 			  </label>
@@ -633,7 +639,7 @@ $('#szukaj_firmy').keyup(function() { //funkcja keyup jest wywolywana kiedy uzyt
 
 		<div class="custom-controls-stacked">
 		  <label class="custom-control custom-radio">
-			<input id="radio-inna" name="radio-firma" type="radio" value ="inna" class="custom-control-input" data-toggle="collapse" data-target="#collapseInnaFirma" aria-expanded="false" aria-controls="collapseExample" onClick="hideZBazy();hideDomyslna();setCookie(1)";>
+			<input id="radio-inna" name="radio-firma" type="radio" value ="inna" class="custom-control-input" data-toggle="collapse" data-target="#collapseInnaFirma" aria-expanded="false" aria-controls="collapseExample" onClick="hideZBazy();hideDomyslna();setCookie(1); unClickAll();">
 			<span class="custom-control-indicator"></span>
 			<span class="custom-control-description">Dodaj nową firmę</span>
 		  </label>

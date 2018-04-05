@@ -194,11 +194,39 @@ else{
 }
 
 
+
+
+
 $id_wizyt = null;
 $suma = null;
 
 
 $uslugi=ORM::for_table('rejestrWizyt')->where_in('id', $idWizytArray)->find_array();
+
+//sprawdzanie czy uslugi do zafakturowania dotycza jednej firmy
+$firmy=Array();
+
+foreach($uslugi as $key => $value){
+    foreach($value as $k => $v){
+       // echo "<BR>K: ".$k."<BR>";
+       // echo "<BR>V: ".$v  ."<BR>";
+        if($k == 'id_firmy') array_push($firmy, $v);
+    }
+}
+$firmy = array_unique($firmy);
+
+if(count($firmy)>1){
+    //jesli uslugi dotycza roznych firm
+    $jednaFirma = true;
+    
+    
+    
+    exit("Wybrano do zafakturowania usługi wykonane dla różnych firm!");
+}
+else{
+    //jesli uslugi dotycza jednej firmy
+    $jednaFirma = false;
+}
 
 	foreach($uslugi as $key => $value){
 		foreach($value as $k => $v){

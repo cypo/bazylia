@@ -21,7 +21,7 @@
     <a class="nav-link" href="raporty.php">Raporty</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="logout.php">Wyloguj</a>
+    <a class="nav-link disabled" href="logout.php">Wyloguj [<?php echo $_SESSION['user'];?>]</a>
   </li>
 </ul>
 		</td>

@@ -14,7 +14,7 @@
 session_start();
 require 'login.php';
 ini_set('display_errors', 0);
-echo "LOGIN: ".$_SESSION['login'];
+//echo "LOGIN: ".$_SESSION['login'];
 
 if($_SESSION['login']!=1){
 	login::checkLogin();

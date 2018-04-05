@@ -56,14 +56,16 @@ numer_faktury/rok
 na recepcji mozliwosc wystawiania faktur tylko dla prywatnych wizyt
 rozwiązać jakoś brak firmy - czy ma sie zmieniac w bazie po zarejestrowaniu pacjenta ? TAK
 rejestracja kilku uslug - div w divie - poprawic
-
+jeśli się kliknie najpierw na firme z bazy, a pozniej wybierze inną opcję pierwsza wybrana opcja zostaje - naprawione
 --zrobione----------------------------------
 
 
 ----w trakcie----
-
------------------
 faktura - termin/sposob zaplaty - musi isc tez do bazy (+ odczyt z bazy)
+-----------------
+
+
+jesli sie wybierze do zafakturowania rozne firmy - dodac jakies ostrzezenie
 faktura - VAT, zwolnienia, pkwiu, itp
 zmiana orzeczenia tylko dla jednej konkretnej uslugi (orxeczenie lekarza med prac) - zrobione (send.php if($uslugaDB->nazwa=='badaniemp2'))
 chorób wewnętrzych - *intern*, *medycyny pracy*
