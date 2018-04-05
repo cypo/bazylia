@@ -235,6 +235,69 @@ else{
 		}
 	}
 
+	
+	//ustalanie daty uslugi
+	$data_uslugi = null;
+	
+	if($_POST['data_uslugi_h'] == 'data_faktury'){
+	    $data_uslugi = date('Y-m-d');
+	}
+	if($_POST['data_uslugi_h'] == 'miesiac'){
+	    switch (date('m')){
+	        case '01':
+	            $data_uslugi = "styczeń ".date('Y');
+	            break;
+	        case '02':
+	            $data_uslugi = "luty ".date('Y');
+	            break;
+	        case '03':
+	            $data_uslugi = "marzec ".date('Y');
+	            break;
+	        case '04':
+	            $data_uslugi = "kwiecień ".date('Y');
+	            break;
+	        case '05':
+	            $data_uslugi = "maj ".date('Y');
+	            break;
+	        case '06':
+	            $data_uslugi = "czerwie ".date('Y');
+	            break;
+	        case '07':
+	            $data_uslugi = "lipiec ".date('Y');
+	            break;
+	        case '08':
+	            $data_uslugi = "sierpień ".date('Y');
+	            break;
+	        case '09':
+	            $data_uslugi = "wrzesień ".date('Y');
+	            break;
+	        case '10':
+	            $data_uslugi = "październik ".date('Y');
+	            break;
+	        case '11':
+	            $data_uslugi = "listopad ".date('Y');
+	            break;
+	        case '12':
+	            $data_uslugi = "grudzień ".date('Y');
+	            break;
+	    }
+	    // echo date('m');
+	}
+	
+	//termin uslugi
+	$termin_zaplaty = $_POST["termin_zaplaty_h"];
+	//date('Y-m-d', strtotime($dataWystawienia[0]. ' + '.$_POST["termin_zaplaty_h"].' days'));
+	
+	//sposob zaplaty
+	$sposob_zaplaty = null;
+	if($_POST['sposob_zaplaty_h'] == 'gotowka'){
+	    $sposob_zaplaty = 'Gotówka';
+	}
+	if($_POST['sposob_zaplaty_h'] == 'przelew'){
+	    $sposob_zaplaty = "Przelew";
+	}
+	
+	
 //sprawdzanie, czy faktura już została wystawiona
 
 $fakturaExists = ORM::for_table('faktury')
@@ -242,13 +305,13 @@ $fakturaExists = ORM::for_table('faktury')
 	->find_one();
 	//jeśli nie to wystawiamy
 	if($fakturaExists==null){
-		$faktura = ORM::for_table('faktury')->create();
-		$faktura->id_wizyty = $id_wizyt;
-		$faktura->suma = $suma;
-		////////////////////////////////termin/sposob do bazy (ustawic wyzej w petli ustawienie zmiennych)///////////////////////////////
-//		$faktura->termin = 
-//		$faktura->sposob = 
-		$faktura->save();
+	    $faktura = ORM::for_table('faktury')->create();
+	    $faktura->id_wizyty = $id_wizyt;
+	    $faktura->suma = $suma;
+	    $faktura->sposob = $sposob_zaplaty;
+	    $faktura->termin = $termin_zaplaty;
+	    $faktura->data_uslugi = $data_uslugi;
+	    $faktura->save();
 		//echo "faktura wystawiona";
 	}
 	else{
@@ -337,64 +400,7 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					</td>
 					<td>
 					<?php 
-					if($_POST['data_uslugi_h'] == 'data_faktury'){
-					    echo date('Y-m-d');
-					}
-					if($_POST['data_uslugi_h'] == 'miesiac'){
-					    switch (date('m')){
-					        case '01':
-					            echo "styczeń ";
-					            echo date('Y');
-					            break; 
-					        case '02':
-					            echo "luty ";
-					            echo date('Y');
-					            break;
-					        case '03':
-					            echo "marzec ";
-					            echo date('Y');
-					            break;
-					        case '04':
-					            echo "kwiecień ";
-					            echo date('Y');
-					            break;
-					        case '05':
-					            echo "maj ";
-					            echo date('Y');
-					            break;
-					        case '06':
-					            echo "czerwiec ";
-					            echo date('Y');
-					            break;
-					        case '07':
-					            echo "lipiec ";
-					            echo date('Y');
-					            break;
-					        case '08':
-					            echo "sierpień ";
-					            echo date('Y');
-					            break;
-					        case '09':
-					            echo "wrzesień ";
-					            echo date('Y');
-					            break;
-					        case '10':
-					            echo "październik ";
-					            echo date('Y');
-					            break;
-					        case '11':
-					            echo "listopad ";
-					            echo date('Y');
-					            break;
-					        case '12':
-					            echo "grudzień ";
-					            echo date('Y');
-					            break;
-            
-					            
-					    }
-					   // echo date('m');
-					}
+					echo $daneFaktury->data_uslugi;
 					
 					?>
 					</td>
@@ -404,7 +410,9 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					Termin zapłaty:
 					</td>
 					<td>
-					<?php echo date('Y-m-d', strtotime($dataWystawienia[0]. ' + '.$_POST["termin_zaplaty_h"].' days')); ?>
+					<?php 
+					echo date('Y-m-d', strtotime($dataWystawienia[0]. ' + '.$daneFaktury->termin.' days'));
+					 ?>
 					</td>
 					</tr>						
 					<tr>
@@ -413,11 +421,11 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 					</td>
 					<td>
 					<?php 
-					if($_POST['sposob_zaplaty_h'] == 'gotowka'){
-					    echo 'gotówka';
+					if($daneFaktury->sposob == 'Gotówka'){
+					    echo "Gotówka";
 					}
-					if($_POST['sposob_zaplaty_h'] == 'przelew'){
-					    echo "Przelew ".$_POST["termin_zaplaty_h"]." dni";
+					else if($daneFaktury->sposob == 'Przelew'){
+					    echo "Przelew ".$daneFaktury->termin." dni";
 					}
 					
 					?>
