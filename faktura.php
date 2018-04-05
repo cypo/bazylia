@@ -504,11 +504,14 @@ $listaUslug = ORM::for_table('uslugi')->where_in('id', array_keys($uslugiPogrupo
 
                 <table border="1" id="tabela" style="border-collapse: collapse;" cellpadding="5">
                     <tr >
-                    <th>Lp.</th>
+                    	<th>Lp.</th>
                         <th>Nazwa</th>
+                        <th>PKWiU</th>
+                        <th>ilosć</th>
                         <th>Cena netto</th>
+                        <th>Wartosć netto</th>
                         <th>Stawka VAT</th>
-                        <th>Kwota VAT</th>
+                        <th>Wartosć VAT</th>
                         <th>Wartość brutto</th>
                     </tr>
 					<?php
@@ -535,7 +538,7 @@ foreach($listaUslug as $usluga){
 	//sprawdzenie ile razy zostala wykonana dana usluga
 	$ilosc = $uslugiPogrupowane[$usluga->id];
 	
-	for($x=0; $x<$ilosc; $x++){
+//	for($x=0; $x<$ilosc; $x++){
 	
 		if($wizyta->rodzaj_wizyty=='specjalistyka') $cena = $usluga->cena_inne;
 		if($wizyta->rodzaj_wizyty=='medycyna_pracy'){
@@ -551,21 +554,31 @@ foreach($listaUslug as $usluga){
 		echo $usluga->nazwa;
 		echo "</td>";
 		echo "<td>";
+		//pkwiu
+		echo "</td>";
+		echo "<td>";
+		//ilosc
+		echo $ilosc;
+		echo "</td>";
+		echo "<td>";
 		echo sprintf('%.2f', $cena-($cena*0.23));
+		echo "</td>";
+		echo "<td>";
+		echo sprintf('%.2f', $cena-($cena*0.23))*$ilosc;
 		echo "</td>";
 		echo "<td>";
 		echo "23%";
 		echo "</td>";
 		echo "<td>";
-		echo sprintf('%.2f', ($cena*0.23));
+		echo sprintf('%.2f', ($cena*0.23))*$ilosc;
 		echo "</td>";
 		echo "<td>";
-		echo sprintf('%.2f', $cena);
+		echo sprintf('%.2f', $cena)*$ilosc;
 		echo "</td>";
 		echo "</tr>";
 			
 		$i++;
-	}
+	//}
 }
 
 ?>
