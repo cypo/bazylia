@@ -65,7 +65,7 @@ faktura - termin/sposob zaplaty - musi isc tez do bazy (+ odczyt z bazy)
 -----------------
 
 
-jesli sie wybierze do zafakturowania rozne firmy - dodac jakies ostrzezenie
+jesli sie wybierze do zafakturowania rozne firmy - dodac jakies ostrzezenie - bez ajaxa raczej nie da rady
 faktura - VAT, zwolnienia, pkwiu, itp
 zmiana orzeczenia tylko dla jednej konkretnej uslugi (orxeczenie lekarza med prac) - zrobione (send.php if($uslugaDB->nazwa=='badaniemp2'))
 chorób wewnętrzych - *intern*, *medycyny pracy*
